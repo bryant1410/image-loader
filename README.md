@@ -10,9 +10,11 @@ ImageLoader is a simple library that makes it easy to download, display and cach
 - [License](#license)
 
 ## Recent Changes
-The latest stable version, **1.6.1**, is [available from Maven Central][maven-stable].
+The latest stable version, **1.6.1**, is [available from Maven Central][maven-stable]. Changes from previous versions can be found at the bottom of this page.
 
-    // TODO: list changes
+- updated to build using Gradle
+- removes requirement to provide a default image (placeholders)
+- adds contact photo URI support
 
 [maven-stable]: http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.novoda.imageloader%22%20AND%20a%3A%22imageloader-core%22
 
