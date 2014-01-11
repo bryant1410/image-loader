@@ -216,7 +216,7 @@ We build using Gradle, and have included a Gradle Wrapper so there is no need to
 - Added ability to use ImageLoader for local images, just use the Uri path of the file #106
 - Recently there has been some issues with Robotium 3.6 failing with following error
     
-    `Test failed to run to completion. Reason: 'Instrumentation run failed due to`
+    `Test failed to run to completion. Reason: 'Instrumentation run failed due to`  
     `'java.lang.IllegalAccessError''`.
     
     If you face this problem open module settings in your IDE and make sure that all dependencies scope beside Robotium are “Provided” and only Robotium is “Compile”
