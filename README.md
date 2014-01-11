@@ -185,7 +185,9 @@ If you're able, please [submit pull requests][link-pr] to fix issues or add requ
 [link-pr]: https://github.com/novoda/ImageLoader/pulls
 
 #### Project Structure
-// TODO
+- core: simple Maven Java project
+- demo: Android project to test ImageLoader
+- acceptance: Android project for Robotium instrumentation tests
 
 #### Requirements
 - Android SDK (API 8 and 16)
