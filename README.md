@@ -148,8 +148,24 @@ If you want to load a an image using an animation you just have to add an `Anima
 
 ## Getting the library
 ### Using Gradle
+Add MavenCentral to your list of repositories and add the ImageLoader dependency (substituting X.Y.Z for the latest version):
+
+	dependencies {
+		compile 'com.novoda.imageloader:imageloader-core:X.Y.Z'
+	}
+
 ### Using Maven
-### As a .jar
+If you are using Maven you can define the repo and dependency in your POM, (substituting X.Y.Z for the latest version):
+
+	<dependency>
+	    <groupId>com.novoda.imageloader</groupId>
+	    <artifactId>imageloader-core</artifactId>
+	    <version>X.Y.Z/version>
+	</dependency>
+	
+### Using a .jar
+You can also include the jar file in your project which you can download from Maven Central.
+	
 
 ## Contributing
 Thanks to all our [contributors](https://github.com/novoda/ImageLoader/graphs/contributors)! Here's how you can get involved.
