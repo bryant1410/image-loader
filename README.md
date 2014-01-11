@@ -10,7 +10,7 @@ ImageLoader is a simple library that makes it easy to download, display and cach
 - [License](#license)
 
 ## Recent Changes
-The latest stable version, 1.6.1, is [available from Maven Central][maven-stable].
+The latest stable version, **1.6.1**, is [available from Maven Central][maven-stable].
 
     // TODO: list changes
 
@@ -183,14 +183,57 @@ We build using Gradle, and have included a Gradle Wrapper so there is no need to
 1. "Run > Edit Configurations" to add a configuration to run the "demo" Android Application module. This will build everything, and install the demo project to your device if you have one attached.
 
 ## History
-// TODO
+### 1.6.0
+- API change: the deprecated build method `build(String, Context)` is un-deprecated and the newer one `build(String, ImageView)` has been removed.
+
+### 1.5.11
+- We no longer keep a copy of the loader task in the image tag as we now rely on the task itself to discover when it should stop and not update the image view.
+
 ### 1.5.9
+- Merged pull request #107 for reported issue Error with Network urls
+- Fixed flickering when dataset is refreshed even when an animation has been set #105
+- Fixed the encoding of the request headers as per issue #104
+- Added ability to use ImageLoader for local images, just use the Uri path of the file #106
+- Recently there has been some issues with Robotium 3.6 failing with following error
+    
+    `Test failed to run to completion. Reason: 'Instrumentation run failed due to 'java.lang.IllegalAccessError''`.
+    
+    If you face this problem open module settings in your IDE and make sure that all dependencies scope beside Robotium are “Provided” and only Robotium is “Compile”
+
 ### 1.5.8
+- Deprecated LoaderContext, LoaderSettings now contains the logic.
+- Fixed flickering when dataset is refreshed (although the animation will still trigger if one has been set).
+- Fixed animations not being asynchronous.
+- Fixed CacheManager.clean() NoSuchElementException.
+- Added ability to set a String on the ImageTag.
+- Added grid list to Demo App.
+- Merged addie9000 java.lang.IllegalArgumentException when not scaled fix #83
+- Merged lkorth Add optional headers to image request #87
+- Added the possibility of loading a picture using an animated transition
+
 ### 1.5.7
+- ImageTagFactory has now factory methods for writing better tests. 
+- When upgrading, please use ImageTagFactory.getInstance instead of new ImageFactory()
+- Added callback when image is loaded, more methods on SettingsBuilder
+- Added ability to disable bitmap resizing
+- Fixed some problems scrolling through long lists
+- Added an error image when the URL is null
+- Fix for loading images behind redirects (max 3)
+
 ### 1.5.6
+- Removed necessity to set a service in the manifest for the clean up. Everything is done in the BasicFileManager with a background thread.
+
 ### 1.5.5
+- Bug fixes
+- New DirectLoader utility to directly download images (do not use on main thread)
+
 ### 1.5.2
+- Added support to load a cached small image as the preview for a larger image
+
 ### 1.5.1
+- Improved concurrent loader
+- Change SD card cache directory to respect Android SDK guidelines
+- Improved LruBitmapCache
 
 ## License
 Copyright &copy; 2013 [Novoda](http://novoda.com/blog/) Ltd. Released under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
