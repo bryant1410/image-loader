@@ -74,9 +74,11 @@ Settings settings = builder.withConnectionTimeout(20000)
 ### In the Activity, Fragment or Adapter
 When you want to load an image into an `ImageView`, you just get the ImageLoader from the Application class (`getImageManager().getLoader()`) and call the `load()` method. Here is how you could use it in a `ListView` with the binder setting the image `URL` in the `ImageView` as a tag:
 
+```java
 /* newInstance(Context context, int defaultImageResource) */
 ImageTagFactory imageTagFactory = newInstance(this, R.drawable.bg_img_loading);
 imageTagFactory.setErrorImageId(R.drawable.bg_img_notfound);
+```
 
 ```java
 private ViewBinder getViewBinder() {
