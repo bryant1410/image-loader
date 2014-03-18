@@ -10,16 +10,16 @@ repositories {
 dependencies {
     compile project(":core")
     compile "com.bugsense.trace:bugsense:3.5"
-    instrumentTestCompile 'com.jayway.android.robotium:robotium-solo:3.6'
+    androidTestCompile 'com.jayway.android.robotium:robotium-solo:3.6'
 }
 
 android {
-    compileSdkVersion 18
-    buildToolsVersion "18.1.0"
+    compileSdkVersion 19
+    buildToolsVersion "19.0.3"
 
     defaultConfig {
         minSdkVersion 8
-        targetSdkVersion 18
+        targetSdkVersion 19
         testPackageName "com.novoda.imageloader.acceptance"
     }
 
