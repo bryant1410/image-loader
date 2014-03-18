@@ -282,5 +282,5 @@ We build using Gradle, and have included a Gradle Wrapper so there is no need to
 - Improved LruBitmapCache
 
 ## License
-Copyright &copy; 2013 [Novoda](http://novoda.com/blog/) Ltd. Released under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
+Copyright &copy; 2014 [Novoda](http://novoda.com/blog/) Ltd. Released under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
 
