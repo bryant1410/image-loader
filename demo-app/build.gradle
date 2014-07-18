@@ -1,0 +1,45 @@
+apply plugin: 'com.android.application'
+
+repositories {
+    mavenCentral()
+    maven {
+        url "http://www.bugsense.com/gradle/"
+    }
+}
+
+dependencies {
+    compile project(":core")
+    compile "com.bugsense.trace:bugsense:3.5"
+    compile 'com.google.code.gson:gson:2.2.4'
+}
+
+android {
+    compileSdkVersion Integer.valueOf(androidCompileSdkVersionProp)
+    buildToolsVersion androidBuildToolsVersionProp
+
+    defaultConfig {
+        minSdkVersion androidMinSdkVersionProp
+        targetSdkVersion androidTargetSdkVersionProp
+        versionCode Integer.valueOf(androidVersionCodeProp)
+        versionName androidVersionNameProp
+        testApplicationId "com.novoda.pxhunter.acceptance"
+
+        // TODO: add the bugsense api key to the CI
+        if (project.hasProperty('bugsenseApiKey')) {
+            buildConfigField 'String', 'BUGSENSE_API_KEY', bugsenseApiKey
+        } else {
+            buildConfigField 'String', 'BUGSENSE_API_KEY', '""'
+        }
+    }
+
+    if (hasProperty('signKeyStore')) {
+        signingConfigs {
+            release {
+                storeFile file(signKeyStore)
+                storePassword signStorePass
+                keyAlias signAlias
+                keyPassword signAliasPassword
+            }
+        }
+    }
+}
