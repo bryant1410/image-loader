@@ -2,12 +2,10 @@ package com.novoda.pxhunter.port;
 
 import android.graphics.Bitmap;
 
-import com.novoda.pxhunter.task.TagWrapper;
-
-import java.io.File;
+import java.io.InputStream;
 
 public interface BitmapDecoder {
 
-    Bitmap decode(TagWrapper tagWrapper, File file);
+    Bitmap decode(int width, int height, InputStream inputStream);
 
 }

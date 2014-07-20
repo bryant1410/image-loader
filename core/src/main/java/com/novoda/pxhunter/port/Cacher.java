@@ -1,15 +1,31 @@
 package com.novoda.pxhunter.port;
 
-import android.graphics.Bitmap;
+import java.io.IOException;
 
-public interface Cacher {
+public interface Cacher<T> {
 
-    Bitmap get(String id);
+    T get(String url) throws CachedItemNotFoundException;
 
-    void put(String id, Bitmap bitmap);
+    void put(String url, T data) throws UnableToCacheItemException;
 
-    void remove(String id);
+    void remove(String url);
 
     void clean();
+
+    class CachedItemNotFoundException extends IOException {
+
+        public CachedItemNotFoundException(Throwable e) {
+            super(e);
+        }
+
+    }
+
+    class UnableToCacheItemException extends IOException {
+
+        public UnableToCacheItemException(Throwable e) {
+            super(e);
+        }
+
+    }
 
 }

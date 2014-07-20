@@ -5,7 +5,7 @@ import android.util.LruCache;
 
 import com.novoda.pxhunter.port.Cacher;
 
-public class LruMemoryCacher implements Cacher {
+public class LruMemoryCacher implements Cacher<Bitmap> {
 
     private static final int MAX_CACHE_SIZE_BYTES = 16 * 1024 * 1024;
 
@@ -45,18 +45,18 @@ public class LruMemoryCacher implements Cacher {
     }
 
     @Override
-    public Bitmap get(String id) {
-        return cache.get(id);
+    public Bitmap get(String url) {
+        return cache.get(url);
     }
 
     @Override
-    public void put(String id, Bitmap bitmap) {
-        cache.put(id, bitmap);
+    public void put(String url, Bitmap bitmap) {
+        cache.put(url, bitmap);
     }
 
     @Override
-    public void remove(String id) {
-        cache.remove(id);
+    public void remove(String url) {
+        cache.remove(url);
     }
 
     @Override

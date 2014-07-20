@@ -2,10 +2,10 @@ package com.novoda.pxhunter.demo;
 
 import android.app.Application;
 import android.content.Context;
-import android.widget.ImageView;
 
 import com.novoda.pxhunter.demo.analytics.CrashAnalytics;
 import com.novoda.pxhunter.demo.analytics.CrashAnalyticsFactory;
+import com.novoda.pxhunter.impl.PxHunterFactory;
 import com.novoda.pxhunter.port.PxHunter;
 
 public class DemoApplication extends Application {
@@ -34,14 +34,7 @@ public class DemoApplication extends Application {
      * Default PxHunter setup
      */
     private void normalPxHunterSettings() {
-        pxHunter = new PxHunter<Void>() {
-
-            @Override
-            public void load(String url, ImageView view, Void metadata) {
-                // TODO setup PxHunter basic
-            }
-
-        };
+        pxHunter = PxHunterFactory.defaultPxHunter();
     }
 
     /**

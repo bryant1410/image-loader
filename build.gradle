@@ -11,7 +11,7 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.12.+'
+        classpath 'com.android.tools.build:gradle:' + androidGradlePluginVersionProp
     }
 }
 
@@ -22,12 +22,14 @@ allprojects {
 subprojects {
     repositories {
         mavenCentral()
-        mavenLocal()
         maven {
             url "https://oss.sonatype.org/content/repositories/snapshots"
         }
         maven {
             url "https://github.com/novoda/public-mvn-repo/raw/master/releases"
+        }
+        maven {
+            url "http://www.bugsense.com/gradle/"
         }
     }
 

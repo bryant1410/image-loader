@@ -1,31 +1,47 @@
 package com.novoda.pxhunter.impl;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import com.novoda.pxhunter.port.BitmapDecoder;
 import com.novoda.pxhunter.port.BitmapProcessor;
-import com.novoda.pxhunter.port.FileNameFactory;
+import com.novoda.pxhunter.port.Cacher;
 import com.novoda.pxhunter.task.Result;
 import com.novoda.pxhunter.task.Retriever;
 import com.novoda.pxhunter.task.TagWrapper;
 
-import java.io.File;
+import java.io.InputStream;
 
 public class FileRetriever<T extends TagWrapper<V>, V> implements Retriever<T, V> {
 
-    private final FileNameFactory<V> fileNameFactory;
+    private static final String TAG = FileRetriever.class.getSimpleName();
+
+    private final Cacher<InputStream> cacher;
     private final BitmapProcessor bitmapProcessor;
     private final BitmapDecoder decoder;
 
-    public FileRetriever(FileNameFactory<V> fileNameFactory, BitmapDecoder decoder, BitmapProcessor bitmapProcessor) {
-        this.fileNameFactory = fileNameFactory;
+    public FileRetriever(Cacher<InputStream> cacher, BitmapDecoder decoder, BitmapProcessor bitmapProcessor) {
+        this.cacher = cacher;
         this.bitmapProcessor = bitmapProcessor;
         this.decoder = decoder;
     }
 
     @Override
     public Result retrieve(T tagWrapper) {
-        Bitmap bitmap = innerRetrieve(tagWrapper);
+        try {
+            InputStream inputStream = cacher.get(tagWrapper.getSourceUrl());
+            return elaboratedBitmapResultFrom(inputStream, tagWrapper);
+        } catch (Cacher.CachedItemNotFoundException e) {
+            Log.w(TAG, "Cached item not found for url: " + tagWrapper.getSourceUrl(), e);
+            return new Failure();
+        }
+    }
+
+    private Result elaboratedBitmapResultFrom(InputStream inputStream, T tagWrapper) {
+        if (tagWrapper.isNoLongerValid()) {
+            return new Failure();
+        }
+        Bitmap bitmap = decoder.decode(tagWrapper.getTargetWidth(), tagWrapper.getTargetHeight(), inputStream);
         Bitmap elaborated = bitmapProcessor.elaborate(tagWrapper, bitmap);
         if (elaborated == null) {
             return new Failure();
@@ -33,27 +49,16 @@ public class FileRetriever<T extends TagWrapper<V>, V> implements Retriever<T, V
         return new Success(elaborated);
     }
 
-    private Bitmap innerRetrieve(T tagWrapper) {
-        String sourceUrl = tagWrapper.getSourceUrl();
-        String fileName = fileNameFactory.getFileName(sourceUrl, tagWrapper.getMetadata());
-        File file = new File(fileName);
-        if (isInvalid(file)) {
-            return null;
-        }
-        return decoder.decode(tagWrapper, file);
-    }
-
-    private boolean isInvalid(File file) {
-        return file == null || !file.exists();
-    }
-
     public static class Success extends com.novoda.pxhunter.task.Success {
+
         public Success(Bitmap bitmap) {
             super(bitmap);
         }
+
     }
 
     public static class Failure extends com.novoda.pxhunter.task.Failure {
+
     }
 
 }

@@ -2,33 +2,42 @@ package com.novoda.pxhunter.impl;
 
 import android.graphics.Bitmap;
 
-import com.novoda.pxhunter.port.NetworkFetcher;
 import com.novoda.pxhunter.port.BitmapDecoder;
 import com.novoda.pxhunter.port.BitmapProcessor;
-import com.novoda.pxhunter.port.FileNameFactory;
+import com.novoda.pxhunter.port.Fetcher;
 import com.novoda.pxhunter.task.Result;
 import com.novoda.pxhunter.task.Retriever;
 import com.novoda.pxhunter.task.TagWrapper;
 
-import java.io.File;
+import java.io.InputStream;
 
 public class NetworkRetriever<T extends TagWrapper<V>, V> implements Retriever<T, V> {
 
-    private final NetworkFetcher networkFetcher;
-    private final FileNameFactory<V> fileNameFactory;
+    private final Fetcher fetcher;
     private final BitmapProcessor bitmapProcessor;
     private final BitmapDecoder decoder;
 
-    public NetworkRetriever(NetworkFetcher networkFetcher, FileNameFactory<V> fileNameFactory, BitmapDecoder decoder, BitmapProcessor bitmapProcessor) {
-        this.networkFetcher = networkFetcher;
-        this.fileNameFactory = fileNameFactory;
+    public NetworkRetriever(Fetcher fetcher, BitmapDecoder decoder, BitmapProcessor bitmapProcessor) {
+        this.fetcher = fetcher;
         this.bitmapProcessor = bitmapProcessor;
         this.decoder = decoder;
     }
 
     @Override
     public Result retrieve(T tagWrapper) {
-        Bitmap bitmap = innerRetrieve(tagWrapper);
+        try {
+            InputStream inputStream = fetcher.fetch(tagWrapper.getSourceUrl());
+            return elaboratedBitmapResultFrom(inputStream, tagWrapper);
+        } catch (Fetcher.UnableToFetchException e) {
+            return new Failure();
+        }
+    }
+
+    private Result elaboratedBitmapResultFrom(InputStream inputStream, T tagWrapper) {
+        if (tagWrapper.isNoLongerValid()) {
+            return new Failure();
+        }
+        Bitmap bitmap = decoder.decode(tagWrapper.getTargetWidth(), tagWrapper.getTargetHeight(), inputStream);
         Bitmap elaborated = bitmapProcessor.elaborate(tagWrapper, bitmap);
         if (elaborated == null) {
             return new Failure();
@@ -36,18 +45,12 @@ public class NetworkRetriever<T extends TagWrapper<V>, V> implements Retriever<T
         return new Success(elaborated);
     }
 
-    private Bitmap innerRetrieve(T tagWrapper) {
-        String sourceUrl = tagWrapper.getSourceUrl();
-        String savedUrl = fileNameFactory.getFileName(sourceUrl, tagWrapper.getMetadata());
-        File file = new File(savedUrl);
-        networkFetcher.retrieveImage(sourceUrl, file);
-        return decoder.decode(tagWrapper, file);
-    }
-
     public static class Success extends com.novoda.pxhunter.task.Success {
+
         public Success(Bitmap bitmap) {
             super(bitmap);
         }
+
     }
 
     public static class Failure extends com.novoda.pxhunter.task.Failure {

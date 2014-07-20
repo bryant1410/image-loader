@@ -6,9 +6,8 @@ import android.graphics.BitmapFactory;
 import android.util.DisplayMetrics;
 
 import com.novoda.pxhunter.port.BitmapDecoder;
-import com.novoda.pxhunter.task.TagWrapper;
 
-import java.io.File;
+import java.io.InputStream;
 
 public class DownsamplingBitmapDecoder implements BitmapDecoder {
 
@@ -23,29 +22,22 @@ public class DownsamplingBitmapDecoder implements BitmapDecoder {
     }
 
     @Override
-    public Bitmap decode(TagWrapper tagWrapper, File file) {
-        if (tagWrapper.isNoLongerValid()) {
-            return null;
-        }
-
-        String filePath = file.getAbsolutePath();
+    public Bitmap decode(int width, int height, InputStream inputStream) {
         BitmapFactory.Options onlyBounds = new BitmapFactory.Options();
         onlyBounds.inJustDecodeBounds = true;
-        BitmapFactory.decodeFile(filePath, onlyBounds);
+        BitmapFactory.decodeStream(inputStream, null, onlyBounds);
 
         int bitmapWidth = onlyBounds.outWidth;
         int bitmapHeight = onlyBounds.outHeight;
-        int viewWidth = tagWrapper.getTargetWidth();
-        int viewHeight = tagWrapper.getTargetHeight();
 
         int bitmapSize;
         int viewSize;
-        if (bitmapWidth * viewHeight > viewWidth * bitmapHeight) {
+        if (bitmapWidth * height > width * bitmapHeight) {
             bitmapSize = bitmapHeight;
-            viewSize = viewHeight;
+            viewSize = height;
         } else {
             bitmapSize = bitmapWidth;
-            viewSize = viewWidth;
+            viewSize = width;
         }
         if (viewSize == 0) {
             DisplayMetrics displayMetrics = resources.getDisplayMetrics();
@@ -53,7 +45,7 @@ public class DownsamplingBitmapDecoder implements BitmapDecoder {
         }
 
         BitmapFactory.Options withDownsampling = getDecodingOptions(bitmapSize, viewSize);
-        return BitmapFactory.decodeFile(filePath, withDownsampling);
+        return BitmapFactory.decodeStream(inputStream, null, withDownsampling);
     }
 
     private BitmapFactory.Options getDecodingOptions(int bitmapSize, int measuredSize) {
