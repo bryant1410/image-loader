@@ -34,7 +34,7 @@ public class DemoApplication extends Application {
      * Default PxHunter setup
      */
     private void normalPxHunterSettings() {
-        pxHunter = PxHunterFactory.defaultPxHunter();
+        pxHunter = PxHunterFactory.defaultPxHunter(this);
     }
 
     /**

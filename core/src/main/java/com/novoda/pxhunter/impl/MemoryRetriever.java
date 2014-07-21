@@ -1,15 +1,14 @@
 package com.novoda.pxhunter.impl;
 
 import android.graphics.Bitmap;
-import android.util.Log;
 
 import com.novoda.pxhunter.port.BitmapProcessor;
 import com.novoda.pxhunter.port.Cacher;
+import com.novoda.pxhunter.task.Metadata;
 import com.novoda.pxhunter.task.Result;
-import com.novoda.pxhunter.task.Retriever;
-import com.novoda.pxhunter.task.TagWrapper;
+import com.novoda.pxhunter.task.ResultRetriever;
 
-public class MemoryRetriever<T extends TagWrapper<V>, V> implements Retriever<T,V> {
+public class MemoryRetriever<T extends Metadata<V>, V> implements ResultRetriever<T,V> {
 
     private static final String TAG = MemoryRetriever.class.getSimpleName();
 
@@ -22,21 +21,20 @@ public class MemoryRetriever<T extends TagWrapper<V>, V> implements Retriever<T,
     }
 
     @Override
-    public Result retrieve(T tagWrapper) {
+    public Result retrieve(T metadata) {
         try {
-            Bitmap bitmap = cacher.get(tagWrapper.getSourceUrl());
-            return elaboratedBitmapResultFrom(bitmap, tagWrapper);
+            Bitmap bitmap = cacher.get(metadata.getSourceUrl());
+            return elaboratedBitmapResultFrom(bitmap, metadata);
         } catch (Cacher.CachedItemNotFoundException e) {
-            Log.w(TAG, "Cached item not found for url: " + tagWrapper.getSourceUrl(), e);
             return new Failure();
         }
     }
 
-    private Result elaboratedBitmapResultFrom(Bitmap bitmap, T tagWrapper) {
-        if (tagWrapper.isNoLongerValid()) {
+    private Result elaboratedBitmapResultFrom(Bitmap bitmap, T metadata) {
+        if (metadata.isNoLongerValid()) {
             return new Failure();
         }
-        Bitmap elaborated = bitmapProcessor.elaborate(tagWrapper, bitmap);
+        Bitmap elaborated = bitmapProcessor.elaborate(metadata, bitmap);
         if (elaborated == null) {
             return new Failure();
         }

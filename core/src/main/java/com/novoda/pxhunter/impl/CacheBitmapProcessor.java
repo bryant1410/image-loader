@@ -5,7 +5,7 @@ import android.util.Log;
 
 import com.novoda.pxhunter.port.BitmapProcessor;
 import com.novoda.pxhunter.port.Cacher;
-import com.novoda.pxhunter.task.TagWrapper;
+import com.novoda.pxhunter.task.Metadata;
 
 public class CacheBitmapProcessor implements BitmapProcessor {
 
@@ -18,8 +18,8 @@ public class CacheBitmapProcessor implements BitmapProcessor {
     }
 
     @Override
-    public Bitmap elaborate(TagWrapper tagWrapper, Bitmap bitmap) {
-        if (tagWrapper.isNoLongerValid()) {
+    public Bitmap elaborate(Metadata metadata, Bitmap bitmap) {
+        if (metadata.isNoLongerValid()) {
             // FIXME: returning null on a public method is not cool, especially when no javaDoc.
             return null;
         }
@@ -27,7 +27,7 @@ public class CacheBitmapProcessor implements BitmapProcessor {
             return bitmap;
         }
         try {
-            cacher.put(tagWrapper.getSourceUrl(), bitmap);
+            cacher.put(metadata.getSourceUrl(), bitmap);
         } catch (Cacher.UnableToCacheItemException e) {
             Log.e(TAG, "Unable to cache bitmap", e);
         }

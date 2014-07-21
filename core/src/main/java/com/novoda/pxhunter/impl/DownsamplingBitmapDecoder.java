@@ -6,8 +6,7 @@ import android.graphics.BitmapFactory;
 import android.util.DisplayMetrics;
 
 import com.novoda.pxhunter.port.BitmapDecoder;
-
-import java.io.InputStream;
+import com.novoda.pxhunter.task.Metadata;
 
 public class DownsamplingBitmapDecoder implements BitmapDecoder {
 
@@ -21,12 +20,19 @@ public class DownsamplingBitmapDecoder implements BitmapDecoder {
         this.maxDownsampling = maxDownsampling;
     }
 
+    // TODO: replace the width and height with Metadata
     @Override
-    public Bitmap decode(int width, int height, InputStream inputStream) {
+    public Bitmap decode(Metadata metadata, byte[] data) {
+        if (metadata.isNoLongerValid()) {
+            return null;
+        }
+
         BitmapFactory.Options onlyBounds = new BitmapFactory.Options();
         onlyBounds.inJustDecodeBounds = true;
-        BitmapFactory.decodeStream(inputStream, null, onlyBounds);
+        BitmapFactory.decodeByteArray(data, 0, data.length, onlyBounds);
 
+        int width = metadata.getTargetWidth();
+        int height = metadata.getTargetHeight();
         int bitmapWidth = onlyBounds.outWidth;
         int bitmapHeight = onlyBounds.outHeight;
 
@@ -45,7 +51,8 @@ public class DownsamplingBitmapDecoder implements BitmapDecoder {
         }
 
         BitmapFactory.Options withDownsampling = getDecodingOptions(bitmapSize, viewSize);
-        return BitmapFactory.decodeStream(inputStream, null, withDownsampling);
+        Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length, withDownsampling);
+        return bitmap;
     }
 
     private BitmapFactory.Options getDecodingOptions(int bitmapSize, int measuredSize) {

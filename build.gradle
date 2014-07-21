@@ -21,16 +21,13 @@ allprojects {
 
 subprojects {
     repositories {
-        mavenCentral()
+        maven {
+            url 'http://ci.novoda.com/maven/releases/'
+        }
         maven {
             url "https://oss.sonatype.org/content/repositories/snapshots"
         }
-        maven {
-            url "https://github.com/novoda/public-mvn-repo/raw/master/releases"
-        }
-        maven {
-            url "http://www.bugsense.com/gradle/"
-        }
+        mavenCentral()
     }
 
     apply plugin: 'checkstyle'

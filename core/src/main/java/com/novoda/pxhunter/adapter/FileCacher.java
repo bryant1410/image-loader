@@ -8,12 +8,11 @@ import com.novoda.pxhunter.port.FileNameFactory;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class FileCacher implements Cacher<InputStream> {
+public class FileCacher implements Cacher<byte[]> {
 
     private static final int BUFFER_SIZE_BYTES = 10 * 1024;
 
@@ -34,25 +33,12 @@ public class FileCacher implements Cacher<InputStream> {
     }
 
     @Override
-    public InputStream get(String url) throws CachedItemNotFoundException {
+    public byte[] get(String url) throws CachedItemNotFoundException {
         try {
             File file = fileCache.cachedFileFrom(url);
-            return new FileInputStream(file);
-        } catch (FileNotFoundException e) {
-            throw new CachedItemNotFoundException(e);
-        }
-    }
-
-    @Override
-    public void put(String url, InputStream data) throws UnableToCacheItemException {
-        String fileName = fileNameFactory.getFileName(url, null);
-        File file = fileCache.cachedFileFrom(fileName);
-
-        try {
-            byte[] dataBytes = getBytes(data);
-            new FileOutputStream(file).write(dataBytes);
+            return getBytes(new FileInputStream(file));
         } catch (IOException e) {
-            throw new UnableToCacheItemException(e);
+            throw new CachedItemNotFoundException(e);
         }
     }
 
@@ -64,6 +50,18 @@ public class FileCacher implements Cacher<InputStream> {
             output.write(buf, 0, n);
         }
         return output.toByteArray();
+    }
+
+    @Override
+    public void put(String url, byte[] data) throws UnableToCacheItemException {
+        String fileName = fileNameFactory.getFileName(url, null);
+        File file = fileCache.cachedFileFrom(fileName);
+
+        try {
+            new FileOutputStream(file).write(data);
+        } catch (IOException e) {
+            throw new UnableToCacheItemException(e);
+        }
     }
 
     @Override

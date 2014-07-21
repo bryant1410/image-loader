@@ -2,10 +2,10 @@ package com.novoda.pxhunter.port;
 
 import android.graphics.Bitmap;
 
-import java.io.InputStream;
+import com.novoda.pxhunter.task.Metadata;
 
 public interface BitmapDecoder {
 
-    Bitmap decode(int width, int height, InputStream inputStream);
+    Bitmap decode(Metadata metadata, byte[] data);
 
 }

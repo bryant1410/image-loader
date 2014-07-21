@@ -4,19 +4,19 @@ import android.os.AsyncTask;
 
 public class RetrieverAsyncTask extends AsyncTask<Void, Void, Result> {
 
-    private final TagWrapper tagWrapper;
-    private final Retriever retriever;
+    private final Metadata metadata;
+    private final ResultRetriever retriever;
 
     private Listener listener;
 
-    public RetrieverAsyncTask(TagWrapper tagWrapper, Retriever retriever) {
-        this.tagWrapper = tagWrapper;
+    public RetrieverAsyncTask(Metadata metadata, ResultRetriever retriever) {
+        this.metadata = metadata;
         this.retriever = retriever;
     }
 
     @Override
     protected Result doInBackground(Void... params) {
-        return retriever.retrieve(tagWrapper);
+        return retriever.retrieve(metadata);
     }
 
     @Override
@@ -24,7 +24,7 @@ public class RetrieverAsyncTask extends AsyncTask<Void, Void, Result> {
         if (result == null) {
             return;
         }
-        if (tagWrapper.isNoLongerValid()) {
+        if (metadata.isNoLongerValid()) {
             return;
         }
 
@@ -39,6 +39,9 @@ public class RetrieverAsyncTask extends AsyncTask<Void, Void, Result> {
     }
 
     public interface Listener {
+
         void onResult(Result result);
+
     }
+
 }

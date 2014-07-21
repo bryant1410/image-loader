@@ -3,7 +3,7 @@ package com.novoda.pxhunter.impl;
 import android.graphics.Bitmap;
 
 import com.novoda.pxhunter.port.BitmapProcessor;
-import com.novoda.pxhunter.task.TagWrapper;
+import com.novoda.pxhunter.task.Metadata;
 
 /**
  * This bitmap processor simply forwards the received bitmap as output of its elaboration.
@@ -13,7 +13,7 @@ import com.novoda.pxhunter.task.TagWrapper;
 public class DummyBitmapProcessor implements BitmapProcessor {
 
     @Override
-    public Bitmap elaborate(TagWrapper tagWrapper, Bitmap bitmap) {
+    public Bitmap elaborate(Metadata metadata, Bitmap bitmap) {
         return bitmap;
     }
 

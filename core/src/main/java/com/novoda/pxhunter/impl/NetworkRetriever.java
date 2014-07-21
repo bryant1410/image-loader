@@ -6,12 +6,10 @@ import com.novoda.pxhunter.port.BitmapDecoder;
 import com.novoda.pxhunter.port.BitmapProcessor;
 import com.novoda.pxhunter.port.Fetcher;
 import com.novoda.pxhunter.task.Result;
-import com.novoda.pxhunter.task.Retriever;
-import com.novoda.pxhunter.task.TagWrapper;
+import com.novoda.pxhunter.task.ResultRetriever;
+import com.novoda.pxhunter.task.Metadata;
 
-import java.io.InputStream;
-
-public class NetworkRetriever<T extends TagWrapper<V>, V> implements Retriever<T, V> {
+public class NetworkRetriever<T extends Metadata<V>, V> implements ResultRetriever<T, V> {
 
     private final Fetcher fetcher;
     private final BitmapProcessor bitmapProcessor;
@@ -24,21 +22,21 @@ public class NetworkRetriever<T extends TagWrapper<V>, V> implements Retriever<T
     }
 
     @Override
-    public Result retrieve(T tagWrapper) {
+    public Result retrieve(T metadata) {
         try {
-            InputStream inputStream = fetcher.fetch(tagWrapper.getSourceUrl());
-            return elaboratedBitmapResultFrom(inputStream, tagWrapper);
+            byte[] data = fetcher.fetch(metadata.getSourceUrl());
+            return elaboratedBitmapResultFrom(data, metadata);
         } catch (Fetcher.UnableToFetchException e) {
             return new Failure();
         }
     }
 
-    private Result elaboratedBitmapResultFrom(InputStream inputStream, T tagWrapper) {
-        if (tagWrapper.isNoLongerValid()) {
+    private Result elaboratedBitmapResultFrom(byte[] data, T metadata) {
+        if (metadata.isNoLongerValid()) {
             return new Failure();
         }
-        Bitmap bitmap = decoder.decode(tagWrapper.getTargetWidth(), tagWrapper.getTargetHeight(), inputStream);
-        Bitmap elaborated = bitmapProcessor.elaborate(tagWrapper, bitmap);
+        Bitmap bitmap = decoder.decode(metadata, data);
+        Bitmap elaborated = bitmapProcessor.elaborate(metadata, bitmap);
         if (elaborated == null) {
             return new Failure();
         }
@@ -56,5 +54,25 @@ public class NetworkRetriever<T extends TagWrapper<V>, V> implements Retriever<T
     public static class Failure extends com.novoda.pxhunter.task.Failure {
 
     }
+
+//    private static class TempFileWriter {
+//
+//        private static final String TEMP_FILE_PREFIX = ".temp_"
+//        private final FileCache fileCache;
+//
+//        private TempFileWriter(FileCache fileCache) {
+//            this.fileCache = fileCache;
+//        }
+//
+//        public void createTempFile(String url, InputStream inputStream) {
+//            File file = fileCache.cachedFileFrom(url);
+//            new FileOutputStream(file).write();
+//        }
+//
+//
+//
+//
+//
+//    }
 
 }

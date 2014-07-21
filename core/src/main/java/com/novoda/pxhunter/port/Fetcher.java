@@ -16,7 +16,6 @@
 package com.novoda.pxhunter.port;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 public interface Fetcher {
 
@@ -26,9 +25,9 @@ public interface Fetcher {
      * Throws {@link com.novoda.pxhunter.port.Fetcher.UnableToFetchException} if the stream cannot be obtained.
      *
      * @param url URL of the image to be downloaded
-     * @return input stream of the image
+     * @return the image as a byte[]
      */
-    InputStream fetch(String url) throws UnableToFetchException;
+    byte[] fetch(String url) throws UnableToFetchException;
 
     class UnableToFetchException extends IOException {
 
