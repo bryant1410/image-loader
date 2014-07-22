@@ -6,7 +6,7 @@ public class NoCustomMetadata extends Metadata<Void> {
         super(url);
     }
 
-    public Void getMetadata() {
+    public Void getCustomData() {
         return null;
     }
 

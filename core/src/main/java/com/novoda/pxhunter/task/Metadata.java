@@ -4,7 +4,8 @@ import com.novoda.pxhunter.impl.Tag;
 
 public abstract class Metadata<T> {
 
-    public static final int UNSPECIFIED = 0;
+    public static final int DIMENSION_UNSPECIFIED = 0;
+
     private final Tag tag;
 
     public Metadata(String url) {
@@ -29,13 +30,13 @@ public abstract class Metadata<T> {
     }
 
     public int getTargetWidth() {
-        return UNSPECIFIED;
+        return DIMENSION_UNSPECIFIED;
     }
 
     public int getTargetHeight() {
-        return UNSPECIFIED;
+        return DIMENSION_UNSPECIFIED;
     }
 
-    public abstract T getMetadata();
+    public abstract T getCustomData();
 
 }
