@@ -46,7 +46,6 @@ public abstract class PxHunterTask<T> extends AsyncTask<Void, Void, Result> {
         for (OnCompletedListener listener : listeners) {
             listener.onCompleted(this, result);
         }
-        // TODO is this needed (do AsyncTasks hang around?)
         listeners.clear();
     }
 

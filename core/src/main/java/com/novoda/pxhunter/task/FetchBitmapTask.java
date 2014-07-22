@@ -26,12 +26,4 @@ public class FetchBitmapTask extends PxHunterTask<Result> {
         return resultRetriever.retrieve(getMetadata());
     }
 
-    @Override
-    protected void onPostExecute(Result result) {
-        super.onPostExecute(result);
-        if (result == null) {
-            return;
-        }
-    }
-
 }

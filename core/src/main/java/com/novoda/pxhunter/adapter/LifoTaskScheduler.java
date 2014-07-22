@@ -7,6 +7,8 @@ import com.novoda.pxhunter.port.TaskScheduler;
 import com.novoda.pxhunter.task.PxHunterTask;
 import com.novoda.pxhunter.task.Result;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 /**
@@ -63,19 +65,31 @@ public class LifoTaskScheduler implements TaskScheduler {
 
     @Override
     public void cancelTasksFetchingFrom(String url) {
+        List<PxHunterTask> pendingCancelTasks = new ArrayList<PxHunterTask>();
         for (PxHunterTask task : tasks) {
             if (task.isFetching(url)) {
-                cancel(task);
+                pendingCancelTasks.add(task);
             }
+        }
+
+        for (PxHunterTask pendingCancelTask : pendingCancelTasks) {
+            pendingCancelTask.cancel(true);
+            tasks.remove(pendingCancelTask);
         }
     }
 
     @Override
     public void cancelTasksTargeting(View view) {
+        List<PxHunterTask> pendingCancelTasks = new ArrayList<PxHunterTask>();
         for (PxHunterTask task : tasks) {
             if (task.isTargeting(view)) {
-                cancel(task);
+                pendingCancelTasks.add(task);
             }
+        }
+
+        for (PxHunterTask pendingCancelTask : pendingCancelTasks) {
+            pendingCancelTask.cancel(true);
+            tasks.remove(pendingCancelTask);
         }
     }
 

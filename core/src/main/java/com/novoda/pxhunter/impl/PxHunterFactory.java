@@ -13,7 +13,7 @@ import com.novoda.pxhunter.port.Cacher;
 import com.novoda.pxhunter.port.Fetcher;
 import com.novoda.pxhunter.port.PxHunter;
 import com.novoda.pxhunter.port.TaskScheduler;
-import com.novoda.pxhunter.task.FetchBitmapTask;
+import com.novoda.pxhunter.task.LoadBitmapIntoViewTask;
 import com.novoda.pxhunter.task.Metadata;
 import com.novoda.pxhunter.task.NoCustomMetadata;
 import com.novoda.pxhunter.task.PxHunterTask;
@@ -88,19 +88,9 @@ public class PxHunterFactory {
                 return;
             }
 
-            PxHunterTask fetchBitmapTask = new FetchBitmapTask(metadata, fallbackStrategyBitmapResultRetriever);
-            fetchBitmapTask.add(new PxHunterTask.OnCompletedListener() {
-
-                @Override
-                public void onCompleted(PxHunterTask completedTask, Result result) {
-                    if (result instanceof Success) {
-                        result.poke(callback);
-                        return;
-                    }
-                }
-
-            });
-            scheduler.schedule(fetchBitmapTask);
+            PxHunterTask loadBitmapIntoViewTask = new LoadBitmapIntoViewTask(metadata, fallbackStrategyBitmapResultRetriever, view, callback);
+            scheduler.cancelTasksTargeting(view);
+            scheduler.schedule(loadBitmapIntoViewTask);
         }
 
     }
