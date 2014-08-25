@@ -32,7 +32,7 @@ public class DemoApplication extends Application {
     }
 
     private void initialisePixelFetcherWithSaneDefaults() {
-        pixelFetcher = PixelFetcherFactory.newDefaultPixelFetcher(this);
+        pixelFetcher = PixelFetcherFactory.newPixelFetcher(this);
     }
 
     @SuppressWarnings("unused")
