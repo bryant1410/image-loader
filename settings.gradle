@@ -1,1 +1,1 @@
-include ':core', ':demo'
+include ':core-deprecated', ':demo-deprecated'

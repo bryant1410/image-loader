@@ -8,7 +8,7 @@ repositories {
 }
 
 dependencies {
-    compile project(":core")
+    compile project(":core-deprecated")
     compile "com.bugsense.trace:bugsense:3.5"
     androidTestCompile 'com.jayway.android.robotium:robotium-solo:3.6'
 }
