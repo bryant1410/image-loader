@@ -11,33 +11,27 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.9.+'
+        classpath 'com.android.tools.build:gradle:' + androidGradlePluginVersionProp
         classpath 'com.squareup.gradle:gradle-android-test-plugin:0.9.1-SNAPSHOT'
     }
 }
 
 allprojects {
-    version = '1.6.1'
+    version = androidVersionNameProp
 }
 
 subprojects {
     repositories {
-        mavenCentral()
-        mavenLocal()
+        maven {
+            url 'http://ci.novoda.com/maven/releases/'
+        }
         maven {
             url "https://oss.sonatype.org/content/repositories/snapshots"
         }
-        maven {
-            url "https://github.com/novoda/public-mvn-repo/raw/master/releases"
-        }
+        mavenCentral()
     }
 
-    apply plugin: 'checkstyle'
-    checkstyle {
-        ignoreFailures = true
-        configFile = new File(teamDir, "checkstyle.xml")
-        configProperties.checkstyleConfigDir = checkstyleConfigDir
-    }
+    // FIXME: re-enable Checkstyle plugin (removed because couldn't parse checkstyle.xml - cacheFile, then AntiHungarian)
 
     apply plugin: 'findbugs'
     findbugs {
