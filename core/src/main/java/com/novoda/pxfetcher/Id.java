@@ -8,16 +8,19 @@ public class Id {
         this.id = id;
     }
 
+    long getValue() {
+        return id;
+    }
+
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
+    public boolean equals(Object otherId) {
+        if (this == otherId) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (otherId == null || getClass() != otherId.getClass()) {
             return false;
         }
-        Id id1 = (Id) o;
-        return id == id1.id;
+        return id == ((Id) otherId).id;
     }
 
     @Override
@@ -28,27 +31,6 @@ public class Id {
     @Override
     public String toString() {
         return String.valueOf(id);
-    }
-
-    public static class Comparator implements java.util.Comparator<Id> {
-
-        private static final int LHS_GREATER_THAN_RHS = 1;
-        private static final int LHS_EQUAL_TO_RHS = 0;
-        private static final int LHS_LESS_THAN_RHS = -1;
-
-        @Override
-        public int compare(Id lhs, Id rhs) {
-            if (lhs == rhs) {
-                return LHS_EQUAL_TO_RHS;
-            }
-
-            if (lhs.id > rhs.id) {
-                return LHS_GREATER_THAN_RHS;
-            }
-
-            return LHS_LESS_THAN_RHS;
-        }
-
     }
 
 }
