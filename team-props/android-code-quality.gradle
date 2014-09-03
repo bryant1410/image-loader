@@ -1,0 +1,19 @@
+task clean(type: Delete, dependsOn: subprojects.collect { p -> "$p.name:clean" }) {
+    delete project.buildDir
+}
+
+task check(dependsOn: subprojects.collect { p ->
+    "$p.name:check"
+})
+
+task assemble(dependsOn: subprojects.collect { p ->
+    "$p.name:assemble"
+})
+
+task build(dependsOn: ['assemble', 'check'])
+
+//apply from: 'team-props/android-lint-rules.gradle'
+apply from: 'team-props/android-checkstyle.gradle'
+//apply from: 'team-props/android-pmd.gradle'
+//apply from: 'team-props/android-findbugs.gradle'
+//apply from: 'team-props/sonar.gradle'
