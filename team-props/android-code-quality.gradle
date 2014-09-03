@@ -12,8 +12,4 @@ task assemble(dependsOn: subprojects.collect { p ->
 
 task build(dependsOn: ['assemble', 'check'])
 
-//apply from: 'team-props/android-lint-rules.gradle'
 apply from: 'team-props/android-checkstyle.gradle'
-//apply from: 'team-props/android-pmd.gradle'
-//apply from: 'team-props/android-findbugs.gradle'
-//apply from: 'team-props/sonar.gradle'
