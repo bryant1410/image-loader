@@ -31,7 +31,7 @@ class AndroidCheckstyleTask extends DefaultTask {
     File configFile = new File("$project.rootDir/team-props/checkstyle/checkstyle.xml")
     @InputFile
     @Optional
-    File xslFile = new File("$project.rootDir/team-props/checkstyle/checkstyle-noframes-sorted.xsl")
+    File xslFile = new File("$project.rootDir/team-props/checkstyle/checkstyle-style-sheet.xsl")
     @OutputFile
     @Optional
     File outputFile = new File("$project.buildDir/reports/checkstyle/checkstyle-${project.name}.xml")
