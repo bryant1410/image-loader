@@ -1,6 +1,10 @@
 def teamDir = new File(buildscript.sourceFile.parentFile, 'team-props')
 ext.checkstyleConfigDir = "$teamDir"
 
+ext {
+    REPORT_LOCATIONS = ""
+}
+
 buildscript {
     repositories {
         maven {
@@ -12,7 +16,6 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:' + androidGradlePluginVersionProp
-        classpath 'com.squareup.gradle:gradle-android-test-plugin:0.9.1-SNAPSHOT'
     }
 }
 
@@ -30,16 +33,16 @@ subprojects {
         }
         mavenCentral()
     }
+}
 
-    // FIXME: re-enable Checkstyle plugin (removed because couldn't parse checkstyle.xml - cacheFile, then AntiHungarian)
+apply from: "team-props/android-code-quality.gradle"
 
-    apply plugin: 'findbugs'
-    findbugs {
-        ignoreFailures = true
+gradle.buildFinished { buildResult ->
+    println "Finished at: " + new Date();
+    if (buildResult.failure) {
+        return;
     }
 
-    apply plugin: 'pmd'
-    pmd {
-        ignoreFailures = true
-    }
+    println "\n"
+    println REPORT_LOCATIONS
 }
