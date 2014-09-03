@@ -54,35 +54,25 @@ class AndroidCheckstyleTask extends DefaultTask {
             ant.taskdef(name: 'checkstyle', classname: 'com.puppycrawl.tools.checkstyle.CheckStyleTask')
             def ignoredModules = ["demo-app"]
             // see also, maxWarnings and failureProperty arguments
-            println "WHAT"
             ant.checkstyle(config: configFile, failOnViolation: !ignoreFailures) {
-                println " DA FUQ"
-                println "sub pruj " + gradleProject.subprojects
                 gradleProject.subprojects.each { submodule ->
                     if (!submodule.plugins.hasPlugin("com.android.application") && !submodule.plugins.hasPlugin("com.android.library")) {
-                        println "NO " + submodule.name
                         return;
                     }
-                    println "ERR"
                     if (ignoredModules.contains(submodule.name)) {
-                        println "NO2 " + submodule.name
                         return
                     }
-                    println "SSS " + submodule.android.sourceSets
                     submodule.android.sourceSets.each { sourceSet ->
-                    println " SS" + sourceSet
                         sourceSet.java.each { file ->
                             file.getSrcDirs().each {
                                 if (it.exists()) {
-                                    println "YES " + submodule.name
                                     fileset(dir: it)
                                 }
                             }
                         }
                     }
-                    
+
                 }
-                println " NON FOUND"
                 if (showViolations) {
                     formatter(type: 'plain', useFile: false)
                 }
