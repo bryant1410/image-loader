@@ -1,0 +1,18 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+    compile project(":pxfetcher")
+    compile 'com.google.code.gson:gson:2.2.4'
+}
+
+android {
+    compileSdkVersion Integer.valueOf(androidCompileSdkVersionProp)
+    buildToolsVersion androidBuildToolsVersionProp
+
+    defaultConfig {
+        minSdkVersion androidMinSdkVersionProp
+        targetSdkVersion androidTargetSdkVersionProp
+        versionCode Integer.valueOf(androidVersionCodeProp)
+        versionName androidVersionNameProp
+    }
+}

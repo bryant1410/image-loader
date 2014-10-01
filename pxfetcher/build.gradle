@@ -1,0 +1,24 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion Integer.valueOf(androidCompileSdkVersionProp)
+    buildToolsVersion androidBuildToolsVersionProp
+
+    defaultConfig {
+        minSdkVersion androidMinSdkVersionProp
+        targetSdkVersion androidTargetSdkVersionProp
+        versionCode Integer.valueOf(androidVersionCodeProp)
+        versionName androidVersionNameProp
+    }
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile project(":core") // TODO: remove core dependencies, then remove this (and core)
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+}

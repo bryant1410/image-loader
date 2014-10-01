@@ -1,6 +1,10 @@
 def teamDir = new File(buildscript.sourceFile.parentFile, 'team-props')
 ext.checkstyleConfigDir = "$teamDir"
 
+ext {
+    REPORT_LOCATIONS = ""
+}
+
 buildscript {
     repositories {
         maven {
@@ -11,41 +15,34 @@ buildscript {
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.9.+'
-        classpath 'com.squareup.gradle:gradle-android-test-plugin:0.9.1-SNAPSHOT'
+        classpath 'com.android.tools.build:gradle:' + androidGradlePluginVersionProp
     }
 }
 
 allprojects {
-    version = '1.6.1'
+    version = androidVersionNameProp
 }
 
 subprojects {
     repositories {
-        mavenCentral()
-        mavenLocal()
+        maven {
+            url 'http://ci.novoda.com/maven/releases/'
+        }
         maven {
             url "https://oss.sonatype.org/content/repositories/snapshots"
         }
-        maven {
-            url "https://github.com/novoda/public-mvn-repo/raw/master/releases"
-        }
+        mavenCentral()
+    }
+}
+
+apply from: "team-props/android-code-quality.gradle"
+
+gradle.buildFinished { buildResult ->
+    println "Finished at: " + new Date();
+    if (buildResult.failure) {
+        return;
     }
 
-    apply plugin: 'checkstyle'
-    checkstyle {
-        ignoreFailures = true
-        configFile = new File(teamDir, "checkstyle.xml")
-        configProperties.checkstyleConfigDir = checkstyleConfigDir
-    }
-
-    apply plugin: 'findbugs'
-    findbugs {
-        ignoreFailures = true
-    }
-
-    apply plugin: 'pmd'
-    pmd {
-        ignoreFailures = true
-    }
+    println "\n"
+    println REPORT_LOCATIONS
 }
