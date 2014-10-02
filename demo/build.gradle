@@ -14,12 +14,14 @@ dependencies {
 }
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "19.0.3"
+    compileSdkVersion Integer.valueOf(androidCompileSdkVersionProp)
+    buildToolsVersion androidBuildToolsVersionProp
 
     defaultConfig {
-        minSdkVersion 8
-        targetSdkVersion 19
+        minSdkVersion androidMinSdkVersionProp
+        targetSdkVersion androidTargetSdkVersionProp
+        versionCode Integer.valueOf(androidVersionCodeProp)
+        versionName androidVersionNameProp
         testPackageName "com.novoda.imageloader.acceptance"
     }
 
