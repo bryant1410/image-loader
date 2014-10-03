@@ -9,8 +9,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 import com.novoda.imageloader.demo.R;
-import com.novoda.imageloader.demo.util.BugSenseHelper;
-import com.novoda.imageloader.demo.util.BugsenseApiKeyFailedException;
 
 /**
  * Nothing really interesting here just a dashboard.
@@ -20,32 +18,18 @@ public class Demos extends Activity implements OnItemClickListener {
     private static final boolean LIST_VIEW = false;
     private static final boolean GRID_VIEW = true;
 
-    private BugSenseHelper bugsenseHelper;
-    private final int fadeIn = R.anim.fade_in;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        bugsenseHelper = new BugSenseHelper(this);
-
-        try {
-            bugsenseHelper.initBugSense();
-        } catch (BugsenseApiKeyFailedException e) {
-            e.printStackTrace();
-        }
         setContentView(R.layout.demos);
         ListView entries = (ListView) findViewById(R.id.demo_list);
         entries.setOnItemClickListener(this);
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        bugsenseHelper.closeBugsense();
-    }
-
-    @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        int fadeIn = R.anim.fade_in;
+
         switch (position) {
             case 0:
                 startActivity(ImageLongList.class);
