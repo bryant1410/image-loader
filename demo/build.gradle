@@ -1,15 +1,11 @@
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 repositories {
     mavenCentral()
-    maven {
-        url "http://www.bugsense.com/gradle/"
-    }
 }
 
 dependencies {
     compile project(":core")
-    compile "com.bugsense.trace:bugsense:3.5"
     androidTestCompile 'com.jayway.android.robotium:robotium-solo:3.6'
 }
 
