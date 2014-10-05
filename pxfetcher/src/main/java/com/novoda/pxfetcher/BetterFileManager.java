@@ -23,18 +23,11 @@ public class BetterFileManager implements FileManager {
         this.cacheExpirationPeriod = cacheExpirationPeriod;
     }
 
-    /**
-     * Clean is removing all the files in the cache directory.
-     */
     @Override
     public void clean() {
         fileUtil.deleteFileCache(cacheDirectory.getAbsolutePath());
     }
 
-    /**
-     * CleanOldFile is removing all the files in the cache directory where the
-     * timestamp is older then the expiration time.
-     */
     @Override
     public void cleanOldFiles() {
         fileUtil.reduceFileCache(cacheDirectory.getAbsolutePath(), cacheExpirationPeriod);
