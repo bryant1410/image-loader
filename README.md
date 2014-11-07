@@ -1,4 +1,4 @@
-# ImageLoader
+# ImageLoader  ![](http://ci.novoda.com/buildStatus/icon?job=ImageLoader)
 
 ImageLoader is a simple library that makes it easy to download, display and cache remote images in Android apps. Image download happens off the UI thread and the images are cached with a two-level in-memory/SD card cache.
 
