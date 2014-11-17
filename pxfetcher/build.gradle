@@ -1,4 +1,22 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.novoda:bintray-release:0.2.4'
+    }
+}
+
 apply plugin: 'com.android.library'
+apply plugin: 'bintray-release'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'com.novoda.imageloader:imageloader-core:1.6.1' // TODO: remove core dependencies, then remove this (and core)
+}
 
 android {
     compileSdkVersion Integer.valueOf(androidCompileSdkVersionProp)
@@ -17,6 +35,11 @@ android {
     }
 }
 
-dependencies {
-    compile project(":core") // TODO: remove core dependencies, then remove this (and core)
+publish {
+    userOrg = 'novoda'
+    groupId = 'com.novoda'
+    artifactId = 'image-loader-pxfetcher'
+    version = project.version
+    description = 'ImageLoader for Android'
+    website = 'https://github.com/novoda/image-loader'
 }

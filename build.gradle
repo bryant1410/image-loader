@@ -20,7 +20,7 @@ buildscript {
 }
 
 allprojects {
-    version = androidVersionNameProp
+    version = '1.6.1'
 }
 
 subprojects {
