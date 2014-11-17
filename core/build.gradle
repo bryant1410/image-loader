@@ -14,7 +14,7 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
+dependencies { 
     compile 'com.google.android:android:2.2.1'
 
     testCompile 'junit:junit:4.10'
@@ -26,6 +26,9 @@ dependencies {
     testCompile 'org.powermock:powermock-api-mockito:1.5'
     testCompile 'junit-addons:junit-addons:1.4'
 }
+
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
 
 tasks.withType(Test) {
     testLogging {
