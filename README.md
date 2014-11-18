@@ -1,4 +1,4 @@
-# image-loader [![](http://ci.novoda.com/buildStatus/icon?job=ImageLoader)](http://ci.novoda.com/job/ImageLoader/lastBuild/console) [![](https://raw.githubusercontent.com/novoda/novoda/master/assets/btn_apache_lisence.png)](LICENSE.txt)
+# image-loader [![](http://ci.novoda.com/buildStatus/icon?job=image-loader)](http://ci.novoda.com/job/image-loader/lastBuild/console) [![](https://raw.githubusercontent.com/novoda/novoda/master/assets/btn_apache_lisence.png)](LICENSE.txt)
 
 Image loader for Android
 
