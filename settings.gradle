@@ -1,1 +1,1 @@
-include ':pxfetcher', ':core', ':demo'
+include ':core'
