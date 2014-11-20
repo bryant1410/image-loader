@@ -13,11 +13,17 @@ To start using this library, add these lines to the `build.gradle` of your proje
 
 ```groovy
 repositories {
-    jcenter()
+    maven {
+        credentials {
+            username 'BINTRAY_USERNAME'
+            password 'BINTRAY_KEY'
+        }
+        url 'http://dl.bintray.com/novoda/maven-private'
+    }
 }
 
 depedencies {
-  compile 'com.novoda:image-loader-core:1.6.1'
+  compile 'com.novoda:image-loader-core:2.0-BETA'
 }
 ```
 
