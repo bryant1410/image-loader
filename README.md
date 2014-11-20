@@ -23,7 +23,7 @@ repositories {
 }
 
 depedencies {
-  compile 'com.novoda:image-loader-core:2.0-BETA'
+  compile 'com.novoda:image-loader:2.0-BETA'
 }
 ```
 
