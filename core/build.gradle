@@ -39,7 +39,7 @@ publish {
     repoType = 'maven-private'
     userOrg = 'novoda'
     groupId = 'com.novoda'
-    artifactId = 'image-loader-pxfetcher'
+    artifactId = 'image-loader'
     version = project.version
     description = 'ImageLoader for Android'
     website = 'https://github.com/novoda/image-loader'
