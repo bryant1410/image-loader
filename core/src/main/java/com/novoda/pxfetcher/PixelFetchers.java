@@ -94,7 +94,7 @@ public class PixelFetchers {
 
     private static class DefaultFileNameFactory implements FileNameFactory<Void> {
 
-        private static final String TAG = BuildConfig.PACKAGE_NAME;
+        private static final String TAG = BuildConfig.APPLICATION_ID;
         private static final String DELIMITER = "_";
         private static final String FILE_NAME_FORMAT = TAG + DELIMITER + "%s";
 
