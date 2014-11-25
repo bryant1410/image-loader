@@ -3,7 +3,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.novoda:bintray-release:0.2.4'
+        classpath 'com.novoda:bintray-release:0.2.5'
     }
 }
 
@@ -36,7 +36,7 @@ android {
 }
 
 publish {
-    repoType = 'maven-private'
+    repoName = 'maven-private'
     userOrg = 'novoda'
     groupId = 'com.novoda'
     artifactId = 'image-loader'
