@@ -39,7 +39,10 @@ ImageManager imageManager = new ImageManager(context, settings);
 Create a tag to wrap the url of a image and set it on the ImageView which will hold the image
 
 ```java
-ImageTag tag = imageTagFactory.build("www.myimage.com/foo.png");
+ImageTagFactory tagFactory = ImageTagFactory.newInstance();
+tagFactory.setHeight(300);
+tagFactory.setWidth(300);
+ImageTag tag = tagFactory.build("www.myimage.com/foo.png", context);
 imageView.setTag(tag);
 ```
 
