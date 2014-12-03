@@ -32,8 +32,8 @@ depedencies {
 Create the ImageManager. *This can be built with a variety of parameters, check out the example project for more details*
 
 ```java
-LoaderSettings settings = new SettingsBuilder().build(this);
-ImageManager imageManager = new ImageManager(this, settings);
+LoaderSettings settings = new SettingsBuilder().build(context);
+ImageManager imageManager = new ImageManager(context, settings);
 ```
 
 Create a tag to wrap the url of a image and set it on the ImageView which will hold the image
