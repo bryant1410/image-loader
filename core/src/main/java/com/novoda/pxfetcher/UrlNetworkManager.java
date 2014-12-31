@@ -68,7 +68,9 @@ public class UrlNetworkManager implements NetworkManager {
 
     private void closeSilently(Closeable closeable) {
         try {
-            closeable.close();
+            if (closeable != null) {
+                closeable.close();
+            }
         } catch (IOException e) {
             Log.e(PixelFetcher.class.getSimpleName(), "Failed to close stream");
         }
