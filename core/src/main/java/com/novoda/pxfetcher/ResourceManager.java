@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.novoda.imageloader.core.network;
+package com.novoda.pxfetcher;
 
 import java.io.File;
 import java.io.InputStream;
@@ -24,7 +24,7 @@ import java.io.InputStream;
  * At the moment requested resources can be retrieved as InputStream
  * or saved directly to a file.
  */
-public interface NetworkManager {
+public interface ResourceManager {
 
     /**
      * Retrieves the image of the given url and stores the content as the file.
