@@ -10,14 +10,6 @@ buildscript {
 apply plugin: 'com.android.library'
 apply plugin: 'bintray-release'
 
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    compile 'com.novoda.imageloader:imageloader-core:1.6.1' // TODO: remove core dependencies, then remove this (and core)
-}
-
 android {
     compileSdkVersion Integer.valueOf(androidCompileSdkVersionProp)
     buildToolsVersion androidBuildToolsVersionProp
@@ -26,7 +18,7 @@ android {
         minSdkVersion androidMinSdkVersionProp
         targetSdkVersion androidTargetSdkVersionProp
         versionCode Integer.valueOf(androidVersionCodeProp)
-        versionName androidVersionNameProp
+        versionName version
     }
 }
 
