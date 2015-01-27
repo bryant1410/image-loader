@@ -4,8 +4,8 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.widget.ImageView;
 
-import com.novoda.imageloader.core.cache.CacheManager;
-import com.novoda.imageloader.core.network.NetworkManager;
+import com.novoda.pxfetcher.CacheManager;
+import com.novoda.pxfetcher.NetworkManager;
 import com.novoda.pxfetcher.task.Result;
 import com.novoda.pxfetcher.task.Retriever;
 import com.novoda.pxfetcher.task.Success;

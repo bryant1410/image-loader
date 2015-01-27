@@ -2,7 +2,7 @@ package com.novoda.pxfetcher;
 
 import android.graphics.Bitmap;
 
-import com.novoda.imageloader.core.network.NetworkManager;
+import com.novoda.pxfetcher.NetworkManager;
 import com.novoda.pxfetcher.task.Result;
 import com.novoda.pxfetcher.task.Retriever;
 import com.novoda.pxfetcher.task.TagWrapper;

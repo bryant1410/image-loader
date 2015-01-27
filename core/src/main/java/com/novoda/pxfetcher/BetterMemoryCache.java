@@ -3,7 +3,7 @@ package com.novoda.pxfetcher;
 import android.graphics.Bitmap;
 import android.util.LruCache;
 
-import com.novoda.imageloader.core.cache.CacheManager;
+import com.novoda.pxfetcher.CacheManager;
 
 public class BetterMemoryCache implements CacheManager {
 

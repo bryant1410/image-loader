@@ -2,8 +2,8 @@ package com.novoda.pxfetcher;
 
 import android.util.Log;
 
-import com.novoda.imageloader.core.exception.ImageNotFoundException;
-import com.novoda.imageloader.core.network.NetworkManager;
+import com.novoda.pxfetcher.ImageNotFoundException;
+import com.novoda.pxfetcher.NetworkManager;
 
 import java.io.Closeable;
 import java.io.File;
@@ -16,6 +16,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class UrlNetworkManager implements NetworkManager {
+
+    private static final String TAG = "UrlNetworkManager";
 
     private static final int TEMP_REDIRECT = 307;
     private static final int CONNECTION_TIMEOUT_MILLIS = 10000;
@@ -62,7 +64,9 @@ public class UrlNetworkManager implements NetworkManager {
                 os.write(buffer, 0, amountRead);
             }
         } catch (Exception e) {
-            com.novoda.imageloader.core.util.Log.warning("Exception : " + e.getMessage());
+            if (Log.isWarningEnabled()) {
+                Log.warning(TAG, "Exception : " + e.getMessage());
+            }
         }
     }
 
