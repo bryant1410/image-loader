@@ -5,17 +5,17 @@ import com.novoda.pxfetcher.task.Retriever;
 import com.novoda.pxfetcher.task.Success;
 import com.novoda.pxfetcher.task.TagWrapper;
 
-public class FallbackStrategyRetriever<T extends TagWrapper<V>, V> implements Retriever<T, V> {
+public class FallbackStrategyRetriever<TagWrapperType extends TagWrapper<MetadataType>, MetadataType> implements Retriever<TagWrapperType, MetadataType> {
 
-    private final Retriever<T, V>[] retrievers;
+    private final Retriever<TagWrapperType, MetadataType>[] retrievers;
 
-    public FallbackStrategyRetriever(Retriever<T, V>... retrievers) {
+    public FallbackStrategyRetriever(Retriever<TagWrapperType, MetadataType>... retrievers) {
         this.retrievers = retrievers;
     }
 
     @Override
-    public Result retrieve(T tagWrapper) {
-        for (Retriever<T, V> retriever : retrievers) {
+    public Result retrieve(TagWrapperType tagWrapper) {
+        for (Retriever<TagWrapperType, MetadataType> retriever : retrievers) {
             Result result = retriever.retrieve(tagWrapper);
             if (result instanceof Success) {
                 return result;

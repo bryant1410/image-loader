@@ -2,7 +2,7 @@ package com.novoda.pxfetcher.task;
 
 import com.novoda.pxfetcher.Tag;
 
-public abstract class TagWrapper<T> {
+public abstract class TagWrapper<MetadataType> {
 
     public static final int UNSPECIFIED = 0;
     private final Tag tag;
@@ -31,6 +31,6 @@ public abstract class TagWrapper<T> {
         return UNSPECIFIED;
     }
 
-    public abstract T getMetadata();
+    public abstract MetadataType getMetadata();
 
 }

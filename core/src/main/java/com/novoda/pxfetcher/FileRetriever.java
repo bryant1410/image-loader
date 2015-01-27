@@ -8,20 +8,20 @@ import com.novoda.pxfetcher.task.TagWrapper;
 
 import java.io.File;
 
-public class FileRetriever<T extends TagWrapper<V>, V> implements Retriever<T, V> {
+public class FileRetriever<TagWrapperType extends TagWrapper<MetadataType>, MetadataType> implements Retriever<TagWrapperType, MetadataType> {
 
-    private final FileNameFactory<V> fileNameFactory;
+    private final FileNameFactory<MetadataType> fileNameFactory;
     private final BitmapProcessor bitmapProcessor;
     private final BitmapDecoder decoder;
 
-    public FileRetriever(FileNameFactory<V> fileNameFactory, BitmapDecoder decoder, BitmapProcessor bitmapProcessor) {
+    public FileRetriever(FileNameFactory<MetadataType> fileNameFactory, BitmapDecoder decoder, BitmapProcessor bitmapProcessor) {
         this.fileNameFactory = fileNameFactory;
         this.bitmapProcessor = bitmapProcessor;
         this.decoder = decoder;
     }
 
     @Override
-    public Result retrieve(T tagWrapper) {
+    public Result retrieve(TagWrapperType tagWrapper) {
         Bitmap bitmap = innerRetrieve(tagWrapper);
         Bitmap elaborated = bitmapProcessor.elaborate(tagWrapper, bitmap);
         if (elaborated == null) {
@@ -30,7 +30,7 @@ public class FileRetriever<T extends TagWrapper<V>, V> implements Retriever<T, V
         return new Success(elaborated);
     }
 
-    private Bitmap innerRetrieve(T tagWrapper) {
+    private Bitmap innerRetrieve(TagWrapperType tagWrapper) {
         String sourceUrl = tagWrapper.getSourceUrl();
         String fileName = fileNameFactory.getFileName(sourceUrl, tagWrapper.getMetadata());
         File file = new File(fileName);
