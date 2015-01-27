@@ -1,5 +1,5 @@
 package com.novoda.pxfetcher.task;
 
-public interface Retriever<T extends TagWrapper<V>,V> {
-    Result retrieve(T tagWrapper);
+public interface Retriever<TagWrapperType extends TagWrapper<MetadataType>, MetadataType> {
+    Result retrieve(TagWrapperType tagWrapper);
 }

@@ -8,14 +8,14 @@ import com.novoda.pxfetcher.task.TagWrapper;
 
 import java.io.File;
 
-public class NetworkRetriever<T extends TagWrapper<V>, V> implements Retriever<T, V> {
+public class NetworkRetriever<TagWrapperType extends TagWrapper<MetadataType>, MetadataType> implements Retriever<TagWrapperType, MetadataType> {
 
     private final ResourceManager resourceManager;
-    private final FileNameFactory<V> fileNameFactory;
+    private final FileNameFactory<MetadataType> fileNameFactory;
     private final BitmapProcessor bitmapProcessor;
     private final BitmapDecoder decoder;
 
-    public NetworkRetriever(ResourceManager resourceManager, FileNameFactory<V> fileNameFactory, BitmapDecoder decoder, BitmapProcessor bitmapProcessor) {
+    public NetworkRetriever(ResourceManager resourceManager, FileNameFactory<MetadataType> fileNameFactory, BitmapDecoder decoder, BitmapProcessor bitmapProcessor) {
         this.resourceManager = resourceManager;
         this.fileNameFactory = fileNameFactory;
         this.bitmapProcessor = bitmapProcessor;
@@ -23,7 +23,7 @@ public class NetworkRetriever<T extends TagWrapper<V>, V> implements Retriever<T
     }
 
     @Override
-    public Result retrieve(T tagWrapper) {
+    public Result retrieve(TagWrapperType tagWrapper) {
         Bitmap bitmap = innerRetrieve(tagWrapper);
         Bitmap elaborated = bitmapProcessor.elaborate(tagWrapper, bitmap);
         if (elaborated == null) {
@@ -32,7 +32,7 @@ public class NetworkRetriever<T extends TagWrapper<V>, V> implements Retriever<T
         return new Success(elaborated);
     }
 
-    private Bitmap innerRetrieve(T tagWrapper) {
+    private Bitmap innerRetrieve(TagWrapperType tagWrapper) {
         String sourceUrl = tagWrapper.getSourceUrl();
         String savedUrl = fileNameFactory.getFileName(sourceUrl, tagWrapper.getMetadata());
         File file = new File(savedUrl);
