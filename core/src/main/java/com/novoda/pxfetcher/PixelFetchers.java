@@ -4,8 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.widget.ImageView;
 
-import com.novoda.imageloader.core.cache.CacheManager;
-import com.novoda.imageloader.core.network.NetworkManager;
 import com.novoda.pxfetcher.task.Result;
 import com.novoda.pxfetcher.task.Retriever;
 import com.novoda.pxfetcher.task.Success;
@@ -48,13 +46,13 @@ public class PixelFetchers {
             ImageViewCallbackFactory callbackFactory = new ImageViewCallbackFactory(new DefaultImageSetter());
 
             CacheManager memoryCacheManager = new BetterMemoryCache(PERCENTAGE_OF_MEMORY_FOR_CACHE);
-            NetworkManager networkManager = new UrlNetworkManager();
+            ResourceManager resourceManager = new HttpResourceManager();
             FileNameFactory fileNameFactory = new DefaultFileNameFactory(context.getCacheDir().getAbsolutePath());
 
             RetrieverFactory<TagWrapper<Void>, Void> retrieverFactory = new RetrieverFactory<TagWrapper<Void>, Void>(
                     memoryCacheManager,
                     fileNameFactory,
-                    networkManager,
+                    resourceManager,
                     MAX_DOWNSAMPLING_FACTOR,
                     context.getResources()
             );
