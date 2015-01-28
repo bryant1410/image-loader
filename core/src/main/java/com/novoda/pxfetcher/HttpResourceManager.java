@@ -14,7 +14,7 @@ import java.net.URL;
 
 public class HttpResourceManager implements ResourceManager {
 
-    private static final String TAG = "UrlNetworkManager";
+    private static final String TAG = HttpResourceManager.class.getSimpleName();
 
     private static final int TEMP_REDIRECT = 307;
     private static final int CONNECTION_TIMEOUT_MILLIS = 10000;
@@ -61,7 +61,7 @@ public class HttpResourceManager implements ResourceManager {
                 os.write(buffer, 0, amountRead);
             }
         } catch (Exception e) {
-            if (Log.isLoggable(TAG, Log.WARN)) {
+            if (BuildConfig.DEBUG && Log.isLoggable(TAG, Log.WARN)) {
                 Log.w(TAG, "Exception : " + e.getMessage());
             }
         }
