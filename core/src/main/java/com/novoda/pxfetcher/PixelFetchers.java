@@ -33,12 +33,12 @@ public class PixelFetchers {
         private static final int MAX_DOWNSAMPLING_FACTOR = 2;
 
         private final ImageViewCallbackFactory callbackFactory;
-        private final BitmapLoader bitmapLoader;
+        private final AsyncRetriever asyncRetriever;
         private final Retriever<TagWrapper<Void>, Void> memoryRetriever;
 
-        private DefaultPixelFetcher(ImageViewCallbackFactory callbackFactory, BitmapLoader bitmapLoader, Retriever<TagWrapper<Void>, Void> memoryRetriever) {
+        private DefaultPixelFetcher(ImageViewCallbackFactory callbackFactory, AsyncRetriever asyncRetriever, Retriever<TagWrapper<Void>, Void> memoryRetriever) {
             this.callbackFactory = callbackFactory;
-            this.bitmapLoader = bitmapLoader;
+            this.asyncRetriever = asyncRetriever;
             this.memoryRetriever = memoryRetriever;
         }
 
@@ -58,10 +58,10 @@ public class PixelFetchers {
             );
 
             Retriever<TagWrapper<Void>, Void> defaultRetriever = retrieverFactory.createDefaultRetriever();
+            DefaultAsyncRetriever asyncRetriever = new DefaultAsyncRetriever(defaultRetriever);
             Retriever<TagWrapper<Void>, Void> memoryRetriever = retrieverFactory.createMemoryRetriever();
-            BitmapLoader bitmapLoader = new BitmapLoader(defaultRetriever);
 
-            return new DefaultPixelFetcher(callbackFactory, bitmapLoader, memoryRetriever);
+            return new DefaultPixelFetcher(callbackFactory, asyncRetriever, memoryRetriever);
         }
 
         @Override
@@ -79,12 +79,12 @@ public class PixelFetchers {
             TagWrapper<Void> tagWrapper = new DefaultTagWrapper(url);
             view.setTag(tagWrapper.getTag());
 
-            BitmapLoader.Callback callback = callbackFactory.createCallback(view);
+            AsyncRetriever.Callback callback = callbackFactory.createCallback(view);
             Result retrieved = memoryRetriever.retrieve(tagWrapper);
             if (retrieved instanceof Success) {
                 retrieved.poke(callback);
             } else {
-                bitmapLoader.load(tagWrapper, callback);
+                asyncRetriever.load(tagWrapper, callback);
             }
         }
 

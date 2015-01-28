@@ -8,7 +8,7 @@ import com.novoda.pxfetcher.task.Success;
 
 import java.lang.ref.WeakReference;
 
-public class DefaultImageViewCallback implements BitmapLoader.Callback {
+public class DefaultImageViewCallback implements AsyncRetriever.Callback {
 
     private final WeakReference<ImageView> imageViewWeakReference;
     private final int placeholderResourceId;

@@ -10,7 +10,7 @@ public class ImageViewCallbackFactory {
         this.imageSetter = imageSetter;
     }
 
-    public BitmapLoader.Callback createCallback(ImageView imageView) {
+    public AsyncRetriever.Callback createCallback(ImageView imageView) {
         return new DefaultImageViewCallback(imageView, 0, null, imageSetter);
     }
 

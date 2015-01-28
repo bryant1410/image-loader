@@ -1,7 +1,7 @@
 package com.novoda.pxfetcher.task;
 
-import com.novoda.pxfetcher.BitmapLoader;
+import com.novoda.pxfetcher.AsyncRetriever;
 
 public abstract class Result {
-    public abstract void poke(BitmapLoader.Callback callback);
+    public abstract void poke(AsyncRetriever.Callback callback);
 }

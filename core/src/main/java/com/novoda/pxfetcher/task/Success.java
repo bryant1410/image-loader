@@ -2,7 +2,7 @@ package com.novoda.pxfetcher.task;
 
 import android.graphics.Bitmap;
 
-import com.novoda.pxfetcher.BitmapLoader;
+import com.novoda.pxfetcher.AsyncRetriever;
 
 public abstract class Success extends Result {
 
@@ -17,7 +17,7 @@ public abstract class Success extends Result {
     }
 
     @Override
-    public void poke(BitmapLoader.Callback callback) {
+    public void poke(AsyncRetriever.Callback callback) {
         callback.onResult(this);
     }
 
