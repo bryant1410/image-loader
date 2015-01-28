@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.novoda.pxfetcher.PixelFetcher;
+import com.novoda.pxfetcher.PixelFetchers;
 import com.novoda.pxfetcher.demo.DemoApplication;
 import com.novoda.pxfetcher.demo.R;
 import com.novoda.pxfetcher.demo.model.Image;
@@ -39,7 +40,7 @@ public class LongListItemView extends LinearLayout {
         String url = image.getUrl();
 
         // Get a reference to the default PixelFetcher, then load the url into the imageView
-        PixelFetcher pixelFetcher = DemoApplication.pixelFetcher();
+        PixelFetcher pixelFetcher = PixelFetchers.getInstance(null);
         pixelFetcher.load(url, imageView);
     }
 

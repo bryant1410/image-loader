@@ -10,12 +10,12 @@ import com.novoda.pxfetcher.demo.model.Image;
 
 import java.util.List;
 
-class LongListAdapter extends BaseAdapter {
+public class LongListAdapter extends BaseAdapter {
 
     private final List<Image> images;
     private final LayoutInflater layoutInflater;
 
-    LongListAdapter(List<Image> images, LayoutInflater layoutInflater) {
+    public LongListAdapter(List<Image> images, LayoutInflater layoutInflater) {
         this.images = images;
         this.layoutInflater = layoutInflater;
     }

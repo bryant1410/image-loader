@@ -18,10 +18,6 @@ public class DemoApplication extends Application {
         context = this;
     }
 
-    public static PixelFetcher pixelFetcher() {
-        return PixelFetchers.getInstance(context);
-    }
-
     public static Context context() {
         return context;
     }
