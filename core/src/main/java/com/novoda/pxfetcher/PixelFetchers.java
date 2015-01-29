@@ -107,22 +107,6 @@ public class PixelFetchers {
             String fileName = String.format(FILE_NAME_FORMAT, sourceUrl.hashCode());
             return cacheDirectory + File.separator + fileName;
         }
-
-        @Override
-        public Void extractMetadata(String fileName) {
-            return null;
-        }
-
-        @Override
-        public boolean hasMetadata(String file) {
-            return false;
-        }
-
-        @Override
-        public String getCacheDirectory() {
-            return cacheDirectory;
-        }
-
     }
 
     private static class DefaultImageSetter implements ImageSetter {

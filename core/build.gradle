@@ -17,8 +17,6 @@ android {
     defaultConfig {
         minSdkVersion androidMinSdkVersionProp
         targetSdkVersion androidTargetSdkVersionProp
-        versionCode Integer.valueOf(androidVersionCodeProp)
-        versionName version
     }
 }
 
