@@ -2,8 +2,6 @@ package com.novoda.pxfetcher.demo.model;
 
 import android.content.res.AssetManager;
 import android.os.AsyncTask;
-import android.view.LayoutInflater;
-import android.widget.AdapterView;
 
 import com.novoda.pxfetcher.demo.DemoApplication;
 
@@ -14,9 +12,9 @@ import java.util.List;
 /**
  * Used to populate the ListView with some content. None of the image-loading goodness is in here.
  * <p/>
- * Check out the {@link com.novoda.pxfetcher.demo.example.gridview.LongListItemView} class for usage of the library.
+ * Check out the {@link com.novoda.pxfetcher.demo.example.watermark.LongListItemView} class for usage of the library.
  *
- * @see {@link com.novoda.pxfetcher.demo.example.gridview.LongListItemView#updateWith(com.novoda.pxfetcher.demo.model.Image)}
+ * @see {@link com.novoda.pxfetcher.demo.example.watermark.LongListItemView#updateWith(com.novoda.pxfetcher.demo.model.Image)}
  */
 public class UpdateAdapterViewWithMockDataTask extends AsyncTask<Void, Void, List<Image>> {
 

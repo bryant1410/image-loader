@@ -1,4 +1,4 @@
-package com.novoda.pxfetcher.demo.example.gridview;
+package com.novoda.pxfetcher.demo.example.watermark;
 
 public class Watermark {
     private String watermark;

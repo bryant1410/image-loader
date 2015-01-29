@@ -4,5 +4,7 @@
   <string name="app_name">PixelFetcher</string>
   <string name="activity_name_image_list">Small images</string>
   <string name="long_list_small_images">Long list of small images</string>
+    <string name="two_sizes_images">Show two list with images of different size</string>
+    <string name="watermark_images">Show images with a watermark</string>
 
 </resources>

@@ -1,4 +1,4 @@
-package com.novoda.pxfetcher.demo.example.gridview;
+package com.novoda.pxfetcher.demo.example.watermark;
 
 import android.app.Activity;
 import android.os.Bundle;
