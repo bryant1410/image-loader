@@ -7,11 +7,11 @@ import com.novoda.pxfetcher.task.Retriever;
 import com.novoda.pxfetcher.task.RetrieverAsyncTask;
 import com.novoda.pxfetcher.task.TagWrapper;
 
-public class DefaultAsyncRetriever implements AsyncRetriever {
+public class AsyncTaskRetriever implements AsyncRetriever {
 
     private final Retriever retriever;
 
-    public DefaultAsyncRetriever(Retriever retriever) {
+    public AsyncTaskRetriever(Retriever retriever) {
         this.retriever = retriever;
     }
 

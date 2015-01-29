@@ -58,7 +58,7 @@ public class PixelFetchers {
             );
 
             Retriever<TagWrapper<Void>, Void> defaultRetriever = retrieverFactory.createDefaultRetriever();
-            DefaultAsyncRetriever asyncRetriever = new DefaultAsyncRetriever(defaultRetriever);
+            AsyncTaskRetriever asyncRetriever = new AsyncTaskRetriever(defaultRetriever);
             Retriever<TagWrapper<Void>, Void> memoryRetriever = retrieverFactory.createMemoryRetriever();
 
             return new DefaultPixelFetcher(callbackFactory, asyncRetriever, memoryRetriever);
