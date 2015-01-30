@@ -37,13 +37,13 @@ public class RetrieverFactory<T extends TagWrapper<V>, V> {
     public Retriever<T, V> createNetworkRetriever() {
         Retriever fileRetriever = createFileRetriever();
         BitmapDecoder croppedDecoder = new DownsamplingBitmapDecoder(resources, DEFAULT_ALLOWED_STRETCHING_THRESHOLD, maxDownsampling);
-        Retriever networkRetriever = new NetworkRetriever<T, V>(resourceManager, fileManager, croppedDecoder, new DummyBitmapProcessor());
+        Retriever networkRetriever = new NetworkRetriever<T, V>(resourceManager, fileManager, croppedDecoder, new NonReactiveBitmapProcessor());
         return new FallbackStrategyRetriever<T, V>(fileRetriever, networkRetriever);
     }
 
     public Retriever createFileRetriever() {
         BitmapDecoder croppedDecoder = new DownsamplingBitmapDecoder(resources, DEFAULT_ALLOWED_STRETCHING_THRESHOLD, maxDownsampling);
-        return new FileRetriever<T, V>(fileManager, croppedDecoder, new DummyBitmapProcessor());
+        return new FileRetriever<T, V>(fileManager, croppedDecoder, new NonReactiveBitmapProcessor());
     }
 
 }

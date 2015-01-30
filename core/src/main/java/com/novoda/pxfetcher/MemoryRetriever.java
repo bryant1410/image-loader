@@ -2,7 +2,6 @@ package com.novoda.pxfetcher;
 
 import android.graphics.Bitmap;
 
-import com.novoda.pxfetcher.CacheManager;
 import com.novoda.pxfetcher.task.Result;
 import com.novoda.pxfetcher.task.Retriever;
 import com.novoda.pxfetcher.task.TagWrapper;
@@ -23,22 +22,22 @@ public class MemoryRetriever<T extends TagWrapper<V>, V> implements Retriever<T,
         Bitmap bitmap = innerRetrieve(tagWrapper);
         Bitmap elaborated = bitmapProcessor.elaborate(tagWrapper, bitmap);
         if (elaborated == null) {
-            return new Failure();
+            return new MemoryRetrieverFailure();
         }
-        return new Success(elaborated);
+        return new MemoryRetrieverSuccess(elaborated);
     }
 
     private Bitmap innerRetrieve(T tagWrapper) {
         return cacheManager.get(tagWrapper.getSourceUrl(), IGNORED, IGNORED);
     }
 
-    public static class Success extends com.novoda.pxfetcher.task.Success {
-        public Success(Bitmap bitmap) {
+    public static class MemoryRetrieverSuccess extends com.novoda.pxfetcher.task.Success {
+        public MemoryRetrieverSuccess(Bitmap bitmap) {
             super(bitmap);
         }
     }
 
-    public static class Failure extends com.novoda.pxfetcher.task.Failure {
+    public static class MemoryRetrieverFailure extends com.novoda.pxfetcher.task.Failure {
 
     }
 

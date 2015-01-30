@@ -27,9 +27,9 @@ public class NetworkRetriever<T extends TagWrapper<V>, V> implements Retriever<T
         Bitmap bitmap = innerRetrieve(tagWrapper);
         Bitmap elaborated = bitmapProcessor.elaborate(tagWrapper, bitmap);
         if (elaborated == null) {
-            return new Failure();
+            return new NetworkRetrieverFailure();
         }
-        return new Success(elaborated);
+        return new NetworkRetrieverSuccess(elaborated);
     }
 
     private Bitmap innerRetrieve(T tagWrapper) {
@@ -40,13 +40,13 @@ public class NetworkRetriever<T extends TagWrapper<V>, V> implements Retriever<T
         return decoder.decode(tagWrapper, file);
     }
 
-    public static class Success extends com.novoda.pxfetcher.task.Success {
-        public Success(Bitmap bitmap) {
+    public static class NetworkRetrieverSuccess extends com.novoda.pxfetcher.task.Success {
+        public NetworkRetrieverSuccess(Bitmap bitmap) {
             super(bitmap);
         }
     }
 
-    public static class Failure extends com.novoda.pxfetcher.task.Failure {
+    public static class NetworkRetrieverFailure extends com.novoda.pxfetcher.task.Failure {
 
     }
 

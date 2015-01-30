@@ -9,7 +9,7 @@ import com.novoda.pxfetcher.task.TagWrapper;
  * This class can be used when no real operation is necessary as last stage of a retrieve operation.
  * 
  */
-public class DummyBitmapProcessor implements BitmapProcessor {
+public class NonReactiveBitmapProcessor implements BitmapProcessor {
 
     @Override
     public Bitmap elaborate(TagWrapper tagWrapper, Bitmap bitmap) {
