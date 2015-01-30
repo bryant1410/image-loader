@@ -44,7 +44,11 @@ public class DefaultImageViewCallback implements BitmapLoader.Callback {
         }
 
         Bitmap bitmap = ok.getBitmap();
-        imageSetter.setBitmap(imageView, bitmap);
+        if (ok instanceof MemoryRetriever.Success) {
+            imageView.setImageBitmap(bitmap);
+        } else {
+            imageSetter.setBitmap(imageView, bitmap);
+        }
         Tag.toSuccess(imageView);
     }
 

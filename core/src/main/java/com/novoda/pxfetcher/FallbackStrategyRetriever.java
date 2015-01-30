@@ -21,6 +21,13 @@ public class FallbackStrategyRetriever<T extends TagWrapper<V>, V> implements Re
                 return result;
             }
         }
+        // just try again
+        for (Retriever<T, V> retriever : retrievers) {
+            Result result = retriever.retrieve(tagWrapper);
+            if (result instanceof Success) {
+                return result;
+            }
+        }
         return new Failure();
     }
 

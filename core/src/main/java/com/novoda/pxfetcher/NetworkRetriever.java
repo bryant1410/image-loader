@@ -2,6 +2,7 @@ package com.novoda.pxfetcher;
 
 import android.graphics.Bitmap;
 
+import com.novoda.imageloader.core.network.NetworkManager;
 import com.novoda.pxfetcher.task.Result;
 import com.novoda.pxfetcher.task.Retriever;
 import com.novoda.pxfetcher.task.TagWrapper;
@@ -10,13 +11,13 @@ import java.io.File;
 
 public class NetworkRetriever<T extends TagWrapper<V>, V> implements Retriever<T, V> {
 
-    private final ResourceManager resourceManager;
+    private final NetworkManager networkManager;
     private final FileNameFactory<V> fileNameFactory;
     private final BitmapProcessor bitmapProcessor;
     private final BitmapDecoder decoder;
 
-    public NetworkRetriever(ResourceManager resourceManager, FileNameFactory<V> fileNameFactory, BitmapDecoder decoder, BitmapProcessor bitmapProcessor) {
-        this.resourceManager = resourceManager;
+    public NetworkRetriever(NetworkManager networkManager, FileNameFactory<V> fileNameFactory, BitmapDecoder decoder, BitmapProcessor bitmapProcessor) {
+        this.networkManager = networkManager;
         this.fileNameFactory = fileNameFactory;
         this.bitmapProcessor = bitmapProcessor;
         this.decoder = decoder;
@@ -36,7 +37,7 @@ public class NetworkRetriever<T extends TagWrapper<V>, V> implements Retriever<T
         String sourceUrl = tagWrapper.getSourceUrl();
         String savedUrl = fileNameFactory.getFileName(sourceUrl, tagWrapper.getMetadata());
         File file = new File(savedUrl);
-        resourceManager.retrieveImage(sourceUrl, file);
+        networkManager.retrieveImage(sourceUrl, file);
         return decoder.decode(tagWrapper, file);
     }
 
