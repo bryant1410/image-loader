@@ -24,7 +24,7 @@ public class RetrieverAsyncTask extends AsyncTask<Void, Void, Result> {
         if (result == null) {
             return;
         }
-        if (tagWrapper.isNoLongerValid()) {
+        if (tagWrapper.isNoMoreValid()) {
             return;
         }
 

@@ -8,6 +8,6 @@ import java.io.File;
 
 public interface BitmapDecoder {
 
-    Bitmap decode(TagWrapper tagWrapper, File file);
+    public Bitmap decode(TagWrapper tagWrapper, File file);
 
 }

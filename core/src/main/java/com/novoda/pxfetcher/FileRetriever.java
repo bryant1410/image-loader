@@ -2,26 +2,27 @@ package com.novoda.pxfetcher;
 
 import android.graphics.Bitmap;
 
+import com.novoda.imageloader.core.file.FileManager;
 import com.novoda.pxfetcher.task.Result;
 import com.novoda.pxfetcher.task.Retriever;
 import com.novoda.pxfetcher.task.TagWrapper;
 
 import java.io.File;
 
-public class FileRetriever<T extends TagWrapper<V>, V> implements Retriever<T, V> {
+public class FileRetriever implements Retriever {
 
-    private final FileNameFactory<V> fileNameFactory;
+    private final FileManager fileManager;
     private final BitmapProcessor bitmapProcessor;
     private final BitmapDecoder decoder;
 
-    public FileRetriever(FileNameFactory<V> fileNameFactory, BitmapDecoder decoder, BitmapProcessor bitmapProcessor) {
-        this.fileNameFactory = fileNameFactory;
+    public FileRetriever(FileManager fileManager, BitmapDecoder decoder, BitmapProcessor bitmapProcessor) {
+        this.fileManager = fileManager;
         this.bitmapProcessor = bitmapProcessor;
         this.decoder = decoder;
     }
 
     @Override
-    public Result retrieve(T tagWrapper) {
+    public Result retrieve(TagWrapper tagWrapper) {
         Bitmap bitmap = innerRetrieve(tagWrapper);
         Bitmap elaborated = bitmapProcessor.elaborate(tagWrapper, bitmap);
         if (elaborated == null) {
@@ -30,10 +31,9 @@ public class FileRetriever<T extends TagWrapper<V>, V> implements Retriever<T, V
         return new Success(elaborated);
     }
 
-    private Bitmap innerRetrieve(T tagWrapper) {
+    private Bitmap innerRetrieve(TagWrapper tagWrapper) {
         String sourceUrl = tagWrapper.getSourceUrl();
-        String fileName = fileNameFactory.getFileName(sourceUrl, tagWrapper.getMetadata());
-        File file = new File(fileName);
+        File file = fileManager.getFile(sourceUrl);
         if (isInvalid(file)) {
             return null;
         }
@@ -51,6 +51,7 @@ public class FileRetriever<T extends TagWrapper<V>, V> implements Retriever<T, V
     }
 
     public static class Failure extends com.novoda.pxfetcher.task.Failure {
+
     }
 
 }

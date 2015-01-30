@@ -2,7 +2,7 @@ package com.novoda.pxfetcher;
 
 import android.graphics.Bitmap;
 
-import com.novoda.pxfetcher.CacheManager;
+import com.novoda.imageloader.core.cache.CacheManager;
 import com.novoda.pxfetcher.task.TagWrapper;
 
 public class CacheBitmapProcessor implements BitmapProcessor {
@@ -15,8 +15,8 @@ public class CacheBitmapProcessor implements BitmapProcessor {
 
     @Override
     public Bitmap elaborate(TagWrapper tagWrapper, Bitmap bitmap) {
-        if (tagWrapper.isNoLongerValid()) {
-            return null;
+        if (tagWrapper.isNoMoreValid()) {
+            return bitmap;
         }
 
         if (bitmap == null) {

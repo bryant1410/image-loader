@@ -1,5 +1,7 @@
 package com.novoda.pxfetcher;
 
+import android.content.res.Resources;
+import android.graphics.PorterDuff;
 import android.widget.ImageView;
 
 import com.novoda.pxfetcher.task.Failure;
@@ -7,14 +9,14 @@ import com.novoda.pxfetcher.task.Success;
 
 import java.lang.ref.WeakReference;
 
-public class DefaultImageViewCallback implements BitmapLoader.Callback {
+public class DebugImageViewCallback implements BitmapLoader.Callback {
 
     private final WeakReference<ImageView> imageViewWeakReference;
     private final int placeholderResourceId;
     private final int errorResourceId;
     private final ImageSetter imageSetter;
 
-    public DefaultImageViewCallback(ImageView imageView, int placeholderResourceId, int errorResourceId, ImageSetter imageSetter) {
+    public DebugImageViewCallback(ImageView imageView, int placeholderResourceId, int errorResourceId, ImageSetter imageSetter) {
         this.imageViewWeakReference = new WeakReference<ImageView>(imageView);
         this.placeholderResourceId = placeholderResourceId;
         this.errorResourceId = errorResourceId;
@@ -27,6 +29,8 @@ public class DefaultImageViewCallback implements BitmapLoader.Callback {
         if (imageView == null) {
             return;
         }
+
+        imageView.setColorFilter(null);
         imageView.setImageResource(placeholderResourceId);
     }
 
@@ -36,11 +40,19 @@ public class DefaultImageViewCallback implements BitmapLoader.Callback {
         if (imageView == null) {
             return;
         }
+
+        Resources resources = imageView.getResources();
+        int color;
         if (ok instanceof MemoryRetriever.Success) {
-            imageView.setImageBitmap(ok.getBitmap());
+            color = resources.getColor(R.color.debug_imageloader_memory_overlay);
+        } else if (ok instanceof FileRetriever.Success) {
+            color = resources.getColor(R.color.debug_imageloader_file_overlay);
         } else {
-            imageSetter.setBitmap(imageView, ok.getBitmap());
+            color = resources.getColor(R.color.debug_imageloader_network_overlay);
         }
+
+        imageView.setColorFilter(color, PorterDuff.Mode.SRC_OVER);
+        imageSetter.setBitmap(imageView, ok.getBitmap());
     }
 
     @Override

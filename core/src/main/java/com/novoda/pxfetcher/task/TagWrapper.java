@@ -1,36 +1,35 @@
 package com.novoda.pxfetcher.task;
 
+import android.view.View;
+
 import com.novoda.pxfetcher.Tag;
 
-public abstract class TagWrapper<T> {
+import java.lang.ref.WeakReference;
 
-    public static final int UNSPECIFIED = 0;
+public class TagWrapper {
+
     private final Tag tag;
+    private final WeakReference<View> viewReference;
 
-    public TagWrapper(String url) {
-        this.tag = new Tag(url);
-    }
-
-    public Tag getTag() {
-        return tag;
+    public TagWrapper(View view, Tag tag) {
+        this.tag = tag;
+        this.viewReference = new WeakReference<View>(view);
     }
 
     public String getSourceUrl() {
         return tag.getSourceUrl();
     }
 
-    public boolean isNoLongerValid() {
-        return false;
+    public View getView() {
+        return viewReference == null ? null : viewReference.get();
     }
 
-    public int getTargetWidth() {
-        return UNSPECIFIED;
+    public boolean isNoMoreValid() {
+        View view = getView();
+        if (view == null) {
+            return true;
+        }
+        return !tag.equals(view.getTag());
     }
-
-    public int getTargetHeight() {
-        return UNSPECIFIED;
-    }
-
-    public abstract T getMetadata();
 
 }
