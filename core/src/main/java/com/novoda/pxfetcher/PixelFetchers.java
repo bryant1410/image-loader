@@ -74,7 +74,6 @@ public class PixelFetchers {
             if (Tag.shouldSkip(url, view)) {
                 return;
             }
-            view.setImageResource(PLACEHOLDER_RES_ID);
 
             TagWrapper<Void> tagWrapper = new DefaultTagWrapper(url);
             view.setTag(tagWrapper.getTag());
