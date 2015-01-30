@@ -1,8 +1,11 @@
 package com.novoda.pxfetcher;
 
-import android.os.AsyncTask;
-
-import com.novoda.pxfetcher.task.*;
+import com.novoda.pxfetcher.task.Failure;
+import com.novoda.pxfetcher.task.Result;
+import com.novoda.pxfetcher.task.Retriever;
+import com.novoda.pxfetcher.task.RetrieverAsyncTask;
+import com.novoda.pxfetcher.task.Success;
+import com.novoda.pxfetcher.task.TagWrapper;
 
 public class BitmapLoader {
 
@@ -16,7 +19,7 @@ public class BitmapLoader {
         callback.onStart();
         new RetrieverAsyncTask(tagWrapper, retriever)
                 .setListener(createListener(callback))
-                .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                .executeOnExecutor(DropExecutor.THREAD_POOL_EXECUTOR);
     }
 
     private RetrieverAsyncTask.Listener createListener(final Callback callback) {
@@ -30,7 +33,9 @@ public class BitmapLoader {
 
     public interface Callback {
         void onStart();
+
         void onResult(Success ok);
+
         void onResult(Failure ko);
     }
 

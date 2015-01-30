@@ -2,6 +2,8 @@ package com.novoda.pxfetcher.task;
 
 import android.os.AsyncTask;
 
+import static com.novoda.pxfetcher.task.LoggingExceptionHandlerAttacher.swallowLiveExceptions;
+
 public class RetrieverAsyncTask extends AsyncTask<Void, Void, Result> {
 
     private final TagWrapper tagWrapper;
@@ -16,6 +18,7 @@ public class RetrieverAsyncTask extends AsyncTask<Void, Void, Result> {
 
     @Override
     protected Result doInBackground(Void... params) {
+        swallowLiveExceptions();
         return retriever.retrieve(tagWrapper);
     }
 

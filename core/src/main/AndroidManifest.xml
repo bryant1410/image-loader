@@ -1,4 +1,8 @@
-<manifest package="com.novoda.pxfetcher">
+<manifest
+  package="com.novoda.imageloader20"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
   <application />
 

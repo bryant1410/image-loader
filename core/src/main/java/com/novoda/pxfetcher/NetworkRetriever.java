@@ -2,28 +2,31 @@ package com.novoda.pxfetcher;
 
 import android.graphics.Bitmap;
 
+import com.novoda.imageloader.core.exception.ImageNotFoundException;
+import com.novoda.imageloader.core.file.FileManager;
+import com.novoda.imageloader.core.network.NetworkManager;
 import com.novoda.pxfetcher.task.Result;
 import com.novoda.pxfetcher.task.Retriever;
 import com.novoda.pxfetcher.task.TagWrapper;
 
 import java.io.File;
 
-public class NetworkRetriever<T extends TagWrapper<V>, V> implements Retriever<T, V> {
+public class NetworkRetriever implements Retriever {
 
-    private final ResourceManager resourceManager;
-    private final FileNameFactory<V> fileNameFactory;
+    private final NetworkManager networkManager;
+    private final FileManager fileManager;
     private final BitmapProcessor bitmapProcessor;
     private final BitmapDecoder decoder;
 
-    public NetworkRetriever(ResourceManager resourceManager, FileNameFactory<V> fileNameFactory, BitmapDecoder decoder, BitmapProcessor bitmapProcessor) {
-        this.resourceManager = resourceManager;
-        this.fileNameFactory = fileNameFactory;
+    public NetworkRetriever(NetworkManager networkManager, FileManager fileManager, BitmapDecoder decoder, BitmapProcessor bitmapProcessor) {
+        this.networkManager = networkManager;
+        this.fileManager = fileManager;
         this.bitmapProcessor = bitmapProcessor;
         this.decoder = decoder;
     }
 
     @Override
-    public Result retrieve(T tagWrapper) {
+    public Result retrieve(TagWrapper tagWrapper) {
         Bitmap bitmap = innerRetrieve(tagWrapper);
         Bitmap elaborated = bitmapProcessor.elaborate(tagWrapper, bitmap);
         if (elaborated == null) {
@@ -32,11 +35,21 @@ public class NetworkRetriever<T extends TagWrapper<V>, V> implements Retriever<T
         return new Success(elaborated);
     }
 
-    private Bitmap innerRetrieve(T tagWrapper) {
+    private Bitmap innerRetrieve(TagWrapper tagWrapper) {
         String sourceUrl = tagWrapper.getSourceUrl();
-        String savedUrl = fileNameFactory.getFileName(sourceUrl, tagWrapper.getMetadata());
+        String savedUrl = fileManager.getFile(sourceUrl).getAbsolutePath();
         File file = new File(savedUrl);
-        resourceManager.retrieveImage(sourceUrl, file);
+        Bitmap bitmap;
+        try {
+            bitmap = fetchBitmap(tagWrapper, sourceUrl, file);
+        } catch (ImageNotFoundException e) {
+            bitmap = null;
+        }
+        return bitmap;
+    }
+
+    private Bitmap fetchBitmap(TagWrapper tagWrapper, String sourceUrl, File file) {
+        networkManager.retrieveImage(sourceUrl, file);
         return decoder.decode(tagWrapper, file);
     }
 
