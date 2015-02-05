@@ -24,18 +24,19 @@ public class CrossFadeImageSetter implements ImageSetter {
         if (currentDrawable == null) {
             currentDrawable = new ColorDrawable(0x00000000);
         }
-        if (currentDrawable instanceof CrossFadableDrawable) {
-            Drawable prevDrawable = ((CrossFadableDrawable) currentDrawable).getNext();
-            setTransitionAndStart(imageView, prevDrawable, nextDrawable);
+        if (currentDrawable instanceof CrossFadeDrawable) {
+            Drawable destinationCurrentDrawable = ((CrossFadeDrawable) currentDrawable).getDestinationDrawable();
+            setTransitionAndStart(imageView, destinationCurrentDrawable, nextDrawable);
         } else {
             setTransitionAndStart(imageView, currentDrawable, nextDrawable);
         }
     }
 
     protected void setTransitionAndStart(ImageView imageView, Drawable prevDrawable, Drawable nextDrawable) {
-        CrossFadableDrawable transitionDrawable = CrossFadableDrawable.create(prevDrawable, nextDrawable);
-        imageView.setImageDrawable(transitionDrawable);
-        transitionDrawable.startTransition(animationDuration);
+        CrossFadeDrawable crossFadeDrawable = CrossFadeDrawable.create(prevDrawable, nextDrawable);
+        imageView.setImageDrawable(crossFadeDrawable);
+        crossFadeDrawable.setCrossFadeEnabled(true);
+        crossFadeDrawable.startTransition(animationDuration);
     }
 
 }
