@@ -44,11 +44,11 @@ public class DebugImageViewCallback implements BitmapLoader.Callback {
         Resources resources = imageView.getResources();
         int color;
         if (ok instanceof MemoryRetriever.Success) {
-            color = resources.getColor(R.color.debug_imageloader_memory_overlay);
+            color = resources.getColor(R.color.px__debug_imageloader_memory_overlay);
         } else if (ok instanceof FileRetriever.Success) {
-            color = resources.getColor(R.color.debug_imageloader_file_overlay);
+            color = resources.getColor(R.color.px__debug_imageloader_file_overlay);
         } else {
-            color = resources.getColor(R.color.debug_imageloader_network_overlay);
+            color = resources.getColor(R.color.px__debug_imageloader_network_overlay);
         }
 
         imageView.setColorFilter(color, PorterDuff.Mode.SRC_OVER);
