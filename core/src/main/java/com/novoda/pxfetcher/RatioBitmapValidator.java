@@ -2,6 +2,7 @@ package com.novoda.pxfetcher;
 
 import android.graphics.Bitmap;
 import android.view.View;
+import android.widget.ImageView;
 
 public class RatioBitmapValidator implements BitmapValidator {
 
@@ -12,12 +13,12 @@ public class RatioBitmapValidator implements BitmapValidator {
     }
 
     @Override
-    public boolean validate(View view, Bitmap bitmap) {
-        if (view == null || bitmap == null) {
+    public boolean isBitmapSuitableForView(Bitmap bitmap, ImageView imageView) {
+        if (imageView == null || bitmap == null) {
             return false;
         }
 
-        if (isRatioIntegrityIntact(view, bitmap)) {
+        if (isRatioIntegrityIntact(imageView, bitmap)) {
             return true;
         }
         return false;

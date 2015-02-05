@@ -1,8 +1,11 @@
 package com.novoda.pxfetcher;
 
 import android.graphics.Bitmap;
-import android.view.View;
+import android.widget.ImageView;
 
+/**
+ * A BitmapValidator validates whether a retrieved bitmap should be used for the given view.
+ */
 public interface BitmapValidator {
-    boolean validate(View view, Bitmap bitmap);
+    boolean isBitmapSuitableForView(Bitmap bitmap, ImageView imageView);
 }
