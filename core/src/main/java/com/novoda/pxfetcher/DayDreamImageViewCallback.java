@@ -2,8 +2,8 @@ package com.novoda.pxfetcher;
 
 import android.widget.ImageView;
 
-import com.novoda.imageloader20.task.Failure;
-import com.novoda.imageloader20.task.Success;
+import com.novoda.pxfetcher.task.Failure;
+import com.novoda.pxfetcher.task.Success;
 
 import java.lang.ref.WeakReference;
 
