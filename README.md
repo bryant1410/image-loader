@@ -1,6 +1,6 @@
 
 
-#Novoda image-loader is now deprecated and unmaintained. 
+# Novoda image-loader is now deprecated and unmaintained. 
 
 We will soon post here our recommendation for image loading in Android.
 
